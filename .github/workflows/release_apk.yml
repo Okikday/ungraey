@@ -42,19 +42,25 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Release APK
+      - name: Build Release APK (Split per ABI)
         working-directory: ungraey_flutter
-        run: flutter build apk --release
+        run: flutter build apk --release --split-per-abi
 
-      - name: Prepare APK asset
+      - name: Prepare APK assets
         run: |
-          cp ungraey_flutter/build/app/outputs/flutter-apk/app-release.apk ungraey_flutter/build/app/outputs/flutter-apk/ungraey-release.apk
+          cd ungraey_flutter/build/app/outputs/flutter-apk
+          for f in app-*-release.apk; do
+            if [ -f "$f" ]; then
+              cp "$f" "ungraey-${f#app-}"
+            fi
+          done
+          ls -la
 
-      - name: Upload APK artifact
+      - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ungraey-release-apk
-          path: ungraey_flutter/build/app/outputs/flutter-apk/ungraey-release.apk
+          name: ungraey-split-apks
+          path: ungraey_flutter/build/app/outputs/flutter-apk/ungraey-*.apk
 
       - name: Create & Publish GitHub Release
         uses: softprops/action-gh-release@v2
@@ -62,7 +68,7 @@ jobs:
           tag_name: ${{ github.event.inputs.tag_name || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'latest' }}
           name: ${{ github.event.inputs.tag_name || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'Ungraey Release (Latest)' }}
           files: |
-            ungraey_flutter/build/app/outputs/flutter-apk/ungraey-release.apk
+            ungraey_flutter/build/app/outputs/flutter-apk/ungraey-*.apk
           generate_release_notes: true
           draft: false
           prerelease: false
