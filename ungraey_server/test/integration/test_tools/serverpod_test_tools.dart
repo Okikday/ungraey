@@ -17,8 +17,15 @@ import 'package:serverpod/serverpod.dart' as _is;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _iacs;
 import 'package:serverpod_test/serverpod_test.dart' as _ist;
+import 'package:ungraey_server/src/generated/bounty.dart' as _iymn45h4;
+import 'package:ungraey_server/src/generated/eco_impact.dart' as _i5e1e246;
 import 'package:ungraey_server/src/generated/greetings/greeting.dart'
     as _i3vayi3l;
+import 'package:ungraey_server/src/generated/handoff_transaction.dart'
+    as _iqny3070;
+import 'package:ungraey_server/src/generated/material_category.dart'
+    as _i8sopnk2;
+import 'package:ungraey_server/src/generated/snap.dart' as _idr2u3mw;
 import 'package:ungraey_server/src/generated/protocol.dart';
 import 'package:ungraey_server/src/generated/endpoints.dart';
 export 'package:serverpod_test/serverpod_test_public_exports.dart';
@@ -151,6 +158,14 @@ class TestEndpoints {
 
   late final _JwtRefreshEndpoint jwtRefresh;
 
+  late final _BountyEndpoint bounty;
+
+  late final _HandoffEndpoint handoff;
+
+  late final _ImpactEndpoint impact;
+
+  late final _SnapEndpoint snap;
+
   late final _GreetingEndpoint greeting;
 }
 
@@ -166,6 +181,22 @@ class _InternalTestEndpoints extends TestEndpoints
       serializationManager,
     );
     jwtRefresh = _JwtRefreshEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    bounty = _BountyEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    handoff = _HandoffEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    impact = _ImpactEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    snap = _SnapEndpoint(
       endpoints,
       serializationManager,
     );
@@ -491,6 +522,408 @@ class _JwtRefreshEndpoint {
         await _localUniqueSession.close();
       }
     });
+  }
+}
+
+class _BountyEndpoint {
+  _BountyEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _is.EndpointDispatch _endpointDispatch;
+
+  final _is.SerializationManager _serializationManager;
+
+  _ida.Future<_iymn45h4.Bounty> createBounty(
+    _ist.TestSessionBuilder sessionBuilder,
+    _iymn45h4.Bounty bounty,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'bounty',
+            method: 'createBounty',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'bounty',
+          methodName: 'createBounty',
+          parameters: _ist.testObjectToJson({'bounty': bounty}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_iymn45h4.Bounty>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<List<_iymn45h4.Bounty>> listBounties(
+    _ist.TestSessionBuilder sessionBuilder, {
+    double? lat,
+    double? lon,
+    double? radiusMiles,
+    _i8sopnk2.MaterialCategory? category,
+  }) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'bounty',
+            method: 'listBounties',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'bounty',
+          methodName: 'listBounties',
+          parameters: _ist.testObjectToJson({
+            'lat': lat,
+            'lon': lon,
+            'radiusMiles': radiusMiles,
+            'category': category,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<List<_iymn45h4.Bounty>>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_iymn45h4.Bounty?> getBounty(
+    _ist.TestSessionBuilder sessionBuilder,
+    int id,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'bounty',
+            method: 'getBounty',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'bounty',
+          methodName: 'getBounty',
+          parameters: _ist.testObjectToJson({'id': id}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_iymn45h4.Bounty?>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<bool> cancelBounty(
+    _ist.TestSessionBuilder sessionBuilder,
+    int id,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'bounty',
+            method: 'cancelBounty',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'bounty',
+          methodName: 'cancelBounty',
+          parameters: _ist.testObjectToJson({'id': id}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<bool>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _HandoffEndpoint {
+  _HandoffEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _is.EndpointDispatch _endpointDispatch;
+
+  final _is.SerializationManager _serializationManager;
+
+  _ida.Future<_iqny3070.HandoffTransaction> initiateHandoff(
+    _ist.TestSessionBuilder sessionBuilder, {
+    required int snapId,
+    required int bountyId,
+    required int sellerId,
+  }) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'handoff',
+            method: 'initiateHandoff',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'handoff',
+          methodName: 'initiateHandoff',
+          parameters: _ist.testObjectToJson({
+            'snapId': snapId,
+            'bountyId': bountyId,
+            'sellerId': sellerId,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_iqny3070.HandoffTransaction>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_iqny3070.HandoffTransaction?> verifyAndCompleteHandoff(
+    _ist.TestSessionBuilder sessionBuilder,
+    String qrToken,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'handoff',
+            method: 'verifyAndCompleteHandoff',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'handoff',
+          methodName: 'verifyAndCompleteHandoff',
+          parameters: _ist.testObjectToJson({'qrToken': qrToken}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_iqny3070.HandoffTransaction?>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _ImpactEndpoint {
+  _ImpactEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _is.EndpointDispatch _endpointDispatch;
+
+  final _is.SerializationManager _serializationManager;
+
+  _ida.Future<_i5e1e246.EcoImpact> getUserImpact(
+    _ist.TestSessionBuilder sessionBuilder,
+    int userId,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'impact',
+            method: 'getUserImpact',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'impact',
+          methodName: 'getUserImpact',
+          parameters: _ist.testObjectToJson({'userId': userId}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_i5e1e246.EcoImpact>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_i5e1e246.EcoImpact> getCommunityImpact(
+    _ist.TestSessionBuilder sessionBuilder,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'impact',
+            method: 'getCommunityImpact',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'impact',
+          methodName: 'getCommunityImpact',
+          parameters: _ist.testObjectToJson({}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_i5e1e246.EcoImpact>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _SnapEndpoint {
+  _SnapEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _is.EndpointDispatch _endpointDispatch;
+
+  final _is.SerializationManager _serializationManager;
+
+  _ida.Future<_idr2u3mw.Snap> submitSnap(
+    _ist.TestSessionBuilder sessionBuilder,
+    _idr2u3mw.Snap snap,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'snap',
+            method: 'submitSnap',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'snap',
+          methodName: 'submitSnap',
+          parameters: _ist.testObjectToJson({'snap': snap}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_idr2u3mw.Snap>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<List<_iymn45h4.Bounty>> findMatchesForSnap(
+    _ist.TestSessionBuilder sessionBuilder,
+    int snapId, {
+    required double radiusMiles,
+  }) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'snap',
+            method: 'findMatchesForSnap',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'snap',
+          methodName: 'findMatchesForSnap',
+          parameters: _ist.testObjectToJson({
+            'snapId': snapId,
+            'radiusMiles': radiusMiles,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<List<_iymn45h4.Bounty>>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Stream<_iymn45h4.Bounty> streamNearbyBounties(
+    _ist.TestSessionBuilder sessionBuilder,
+  ) {
+    var _localTestStreamManager = _ist.TestStreamManager<_iymn45h4.Bounty>();
+    _ist.callStreamFunctionAndHandleExceptions(
+      () async {
+        var _localUniqueSession =
+            (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+              endpoint: 'snap',
+              method: 'streamNearbyBounties',
+            );
+        var _localCallContext = await _endpointDispatch
+            .getMethodStreamCallContext(
+              createSessionCallback: (_) => _localUniqueSession,
+              endpointPath: 'snap',
+              methodName: 'streamNearbyBounties',
+              arguments: {},
+              requestedInputStreams: [],
+              serializationManager: _serializationManager,
+            );
+        await _localTestStreamManager.callStreamMethod(
+          _localCallContext,
+          _localUniqueSession,
+          {},
+        );
+      },
+      _localTestStreamManager.outputStreamController,
+    );
+    return _localTestStreamManager.outputStreamController.stream;
   }
 }
 

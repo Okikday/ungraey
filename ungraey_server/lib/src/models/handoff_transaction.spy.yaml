@@ -1,0 +1,15 @@
+class: HandoffTransaction
+table: handoff_transaction
+fields:
+  snapId: int
+  bountyId: int
+  sellerId: int
+  buyerId: int
+  qrToken: String
+  rewardAmountCents: int
+  rewardType: RewardType
+  kgDiverted: double
+  co2eSavedKg: double
+  status: String, default='pending'
+  completedAt: DateTime?
+  createdAt: DateTime, default=now

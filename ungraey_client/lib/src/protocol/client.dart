@@ -17,8 +17,15 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
     as _iaic;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:ungraey_client/src/protocol/bounty.dart' as _ia79p7gr;
+import 'package:ungraey_client/src/protocol/eco_impact.dart' as _i3nwor1d;
 import 'package:ungraey_client/src/protocol/greetings/greeting.dart'
     as _i9fo1z21;
+import 'package:ungraey_client/src/protocol/handoff_transaction.dart'
+    as _iwjfyrh2;
+import 'package:ungraey_client/src/protocol/material_category.dart'
+    as _iv2qm0wr;
+import 'package:ungraey_client/src/protocol/snap.dart' as _icssktmw;
 import 'protocol.dart' as _il2as5qe;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
@@ -246,6 +253,155 @@ class EndpointJwtRefresh extends _iacc.EndpointRefreshJwtTokens {
       );
 }
 
+/// Endpoint managing demand-side bounties for upcyclable commodities.
+/// {@category Endpoint}
+class EndpointBounty extends _isc.EndpointRef {
+  EndpointBounty(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'bounty';
+
+  /// Posts a new commodity bounty.
+  _ida.Future<_ia79p7gr.Bounty> createBounty(_ia79p7gr.Bounty bounty) =>
+      caller.callServerEndpoint<_ia79p7gr.Bounty>(
+        'bounty',
+        'createBounty',
+        {'bounty': bounty},
+      );
+
+  /// Lists active bounties, optionally filtered by proximity and category.
+  _ida.Future<List<_ia79p7gr.Bounty>> listBounties({
+    double? lat,
+    double? lon,
+    double? radiusMiles,
+    _iv2qm0wr.MaterialCategory? category,
+  }) => caller.callServerEndpoint<List<_ia79p7gr.Bounty>>(
+    'bounty',
+    'listBounties',
+    {
+      'lat': lat,
+      'lon': lon,
+      'radiusMiles': radiusMiles,
+      'category': category,
+    },
+  );
+
+  /// Retrieves a specific bounty by [id].
+  _ida.Future<_ia79p7gr.Bounty?> getBounty(int id) =>
+      caller.callServerEndpoint<_ia79p7gr.Bounty?>(
+        'bounty',
+        'getBounty',
+        {'id': id},
+      );
+
+  /// Cancels an active bounty.
+  _ida.Future<bool> cancelBounty(int id) => caller.callServerEndpoint<bool>(
+    'bounty',
+    'cancelBounty',
+    {'id': id},
+  );
+}
+
+/// Endpoint managing the physical QR handoff and value exchange settlement.
+/// {@category Endpoint}
+class EndpointHandoff extends _isc.EndpointRef {
+  EndpointHandoff(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'handoff';
+
+  /// Initiates a handoff transaction and returns a cryptographically unique QR token.
+  _ida.Future<_iwjfyrh2.HandoffTransaction> initiateHandoff({
+    required int snapId,
+    required int bountyId,
+    required int sellerId,
+  }) => caller.callServerEndpoint<_iwjfyrh2.HandoffTransaction>(
+    'handoff',
+    'initiateHandoff',
+    {
+      'snapId': snapId,
+      'bountyId': bountyId,
+      'sellerId': sellerId,
+    },
+  );
+
+  /// Verifies a scanned QR token, atomically completing the handoff and crediting eco-impact.
+  _ida.Future<_iwjfyrh2.HandoffTransaction?> verifyAndCompleteHandoff(
+    String qrToken,
+  ) => caller.callServerEndpoint<_iwjfyrh2.HandoffTransaction?>(
+    'handoff',
+    'verifyAndCompleteHandoff',
+    {'qrToken': qrToken},
+  );
+}
+
+/// Endpoint for fetching user-level and community-wide environmental metrics.
+/// {@category Endpoint}
+class EndpointImpact extends _isc.EndpointRef {
+  EndpointImpact(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'impact';
+
+  /// Fetches the authenticated user's personal ecological savings.
+  _ida.Future<_i3nwor1d.EcoImpact> getUserImpact(int userId) =>
+      caller.callServerEndpoint<_i3nwor1d.EcoImpact>(
+        'impact',
+        'getUserImpact',
+        {'userId': userId},
+      );
+
+  /// Aggregates community-wide impact for the global live counter.
+  _ida.Future<_i3nwor1d.EcoImpact> getCommunityImpact() =>
+      caller.callServerEndpoint<_i3nwor1d.EcoImpact>(
+        'impact',
+        'getCommunityImpact',
+        {},
+      );
+}
+
+/// Endpoint for handling supply-side waste pile snaps and localized matching.
+/// {@category Endpoint}
+class EndpointSnap extends _isc.EndpointRef {
+  EndpointSnap(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'snap';
+
+  /// Records a new snapped waste pile.
+  _ida.Future<_icssktmw.Snap> submitSnap(_icssktmw.Snap snap) =>
+      caller.callServerEndpoint<_icssktmw.Snap>(
+        'snap',
+        'submitSnap',
+        {'snap': snap},
+      );
+
+  /// Finds all active bounties matching the snap's detected materials within [radiusMiles].
+  _ida.Future<List<_ia79p7gr.Bounty>> findMatchesForSnap(
+    int snapId, {
+    required double radiusMiles,
+  }) => caller.callServerEndpoint<List<_ia79p7gr.Bounty>>(
+    'snap',
+    'findMatchesForSnap',
+    {
+      'snapId': snapId,
+      'radiusMiles': radiusMiles,
+    },
+  );
+
+  /// Real-time stream of nearby bounty alerts.
+  _ida.Stream<_ia79p7gr.Bounty> streamNearbyBounties() =>
+      caller.callStreamingServerEndpoint<
+        _ida.Stream<_ia79p7gr.Bounty>,
+        _ia79p7gr.Bounty
+      >(
+        'snap',
+        'streamNearbyBounties',
+        {},
+        {},
+      );
+}
+
 /// This is an example endpoint that returns a greeting message through
 /// its [hello] method.
 /// {@category Endpoint}
@@ -304,6 +460,10 @@ class Client extends _isc.ServerpodClientShared {
        ) {
     emailIdp = EndpointEmailIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);
+    bounty = EndpointBounty(this);
+    handoff = EndpointHandoff(this);
+    impact = EndpointImpact(this);
+    snap = EndpointSnap(this);
     greeting = EndpointGreeting(this);
     modules = Modules(this);
   }
@@ -311,6 +471,14 @@ class Client extends _isc.ServerpodClientShared {
   late final EndpointEmailIdp emailIdp;
 
   late final EndpointJwtRefresh jwtRefresh;
+
+  late final EndpointBounty bounty;
+
+  late final EndpointHandoff handoff;
+
+  late final EndpointImpact impact;
+
+  late final EndpointSnap snap;
 
   late final EndpointGreeting greeting;
 
@@ -320,6 +488,10 @@ class Client extends _isc.ServerpodClientShared {
   Map<String, _isc.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
+    'bounty': bounty,
+    'handoff': handoff,
+    'impact': impact,
+    'snap': snap,
     'greeting': greeting,
   };
 

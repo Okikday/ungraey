@@ -1,0 +1,11 @@
+class: EcoImpact
+table: eco_impact
+fields:
+  userId: int
+  totalKgDiverted: double, default=0.0
+  totalCo2eSavedKg: double, default=0.0
+  treesSavedEquivalent: double, default=0.0
+  waterSavedLiters: double, default=0.0
+  pointsBalance: int, default=0
+  completedHandoffsCount: int, default=0
+  updatedAt: DateTime, default=now

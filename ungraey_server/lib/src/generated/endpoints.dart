@@ -15,8 +15,16 @@ import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _iacs;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _iais;
+import 'package:ungraey_server/src/generated/bounty.dart' as _iymn45h4;
+import 'package:ungraey_server/src/generated/material_category.dart'
+    as _i8sopnk2;
+import 'package:ungraey_server/src/generated/snap.dart' as _idr2u3mw;
 import '../auth/email_idp_endpoint.dart' as _iuc1hd5t;
 import '../auth/jwt_refresh_endpoint.dart' as _inwq3ztq;
+import '../endpoints/bounty_endpoint.dart' as _iqrtlwz5;
+import '../endpoints/handoff_endpoint.dart' as _in712qd3;
+import '../endpoints/impact_endpoint.dart' as _ilxwsedw;
+import '../endpoints/snap_endpoint.dart' as _its6ddlz;
 import '../greetings/greeting_endpoint.dart' as _il624ik7;
 
 class Endpoints extends _is.EndpointDispatch {
@@ -33,6 +41,30 @@ class Endpoints extends _is.EndpointDispatch {
         ..initialize(
           server,
           'jwtRefresh',
+          null,
+        ),
+      'bounty': _iqrtlwz5.BountyEndpoint()
+        ..initialize(
+          server,
+          'bounty',
+          null,
+        ),
+      'handoff': _in712qd3.HandoffEndpoint()
+        ..initialize(
+          server,
+          'handoff',
+          null,
+        ),
+      'impact': _ilxwsedw.ImpactEndpoint()
+        ..initialize(
+          server,
+          'impact',
+          null,
+        ),
+      'snap': _its6ddlz.SnapEndpoint()
+        ..initialize(
+          server,
+          'snap',
           null,
         ),
       'greeting': _il624ik7.GreetingEndpoint()
@@ -245,6 +277,260 @@ class Endpoints extends _is.EndpointDispatch {
                         session,
                         refreshToken: params['refreshToken'],
                       ),
+        ),
+      },
+    );
+    connectors['bounty'] = _is.EndpointConnector(
+      name: 'bounty',
+      endpoint: endpoints['bounty']!,
+      methodConnectors: {
+        'createBounty': _is.MethodConnector(
+          name: 'createBounty',
+          params: {
+            'bounty': _is.ParameterDescription(
+              name: 'bounty',
+              type: _is.getType<_iymn45h4.Bounty>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['bounty'] as _iqrtlwz5.BountyEndpoint)
+                  .createBounty(
+                    session,
+                    params['bounty'],
+                  ),
+        ),
+        'listBounties': _is.MethodConnector(
+          name: 'listBounties',
+          params: {
+            'lat': _is.ParameterDescription(
+              name: 'lat',
+              type: _is.getType<double?>(),
+              nullable: true,
+            ),
+            'lon': _is.ParameterDescription(
+              name: 'lon',
+              type: _is.getType<double?>(),
+              nullable: true,
+            ),
+            'radiusMiles': _is.ParameterDescription(
+              name: 'radiusMiles',
+              type: _is.getType<double?>(),
+              nullable: true,
+            ),
+            'category': _is.ParameterDescription(
+              name: 'category',
+              type: _is.getType<_i8sopnk2.MaterialCategory?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['bounty'] as _iqrtlwz5.BountyEndpoint)
+                  .listBounties(
+                    session,
+                    lat: params['lat'],
+                    lon: params['lon'],
+                    radiusMiles: params['radiusMiles'],
+                    category: params['category'],
+                  ),
+        ),
+        'getBounty': _is.MethodConnector(
+          name: 'getBounty',
+          params: {
+            'id': _is.ParameterDescription(
+              name: 'id',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['bounty'] as _iqrtlwz5.BountyEndpoint).getBounty(
+                    session,
+                    params['id'],
+                  ),
+        ),
+        'cancelBounty': _is.MethodConnector(
+          name: 'cancelBounty',
+          params: {
+            'id': _is.ParameterDescription(
+              name: 'id',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['bounty'] as _iqrtlwz5.BountyEndpoint)
+                  .cancelBounty(
+                    session,
+                    params['id'],
+                  ),
+        ),
+      },
+    );
+    connectors['handoff'] = _is.EndpointConnector(
+      name: 'handoff',
+      endpoint: endpoints['handoff']!,
+      methodConnectors: {
+        'initiateHandoff': _is.MethodConnector(
+          name: 'initiateHandoff',
+          params: {
+            'snapId': _is.ParameterDescription(
+              name: 'snapId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+            'bountyId': _is.ParameterDescription(
+              name: 'bountyId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+            'sellerId': _is.ParameterDescription(
+              name: 'sellerId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['handoff'] as _in712qd3.HandoffEndpoint)
+                  .initiateHandoff(
+                    session,
+                    snapId: params['snapId'],
+                    bountyId: params['bountyId'],
+                    sellerId: params['sellerId'],
+                  ),
+        ),
+        'verifyAndCompleteHandoff': _is.MethodConnector(
+          name: 'verifyAndCompleteHandoff',
+          params: {
+            'qrToken': _is.ParameterDescription(
+              name: 'qrToken',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['handoff'] as _in712qd3.HandoffEndpoint)
+                  .verifyAndCompleteHandoff(
+                    session,
+                    params['qrToken'],
+                  ),
+        ),
+      },
+    );
+    connectors['impact'] = _is.EndpointConnector(
+      name: 'impact',
+      endpoint: endpoints['impact']!,
+      methodConnectors: {
+        'getUserImpact': _is.MethodConnector(
+          name: 'getUserImpact',
+          params: {
+            'userId': _is.ParameterDescription(
+              name: 'userId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['impact'] as _ilxwsedw.ImpactEndpoint)
+                  .getUserImpact(
+                    session,
+                    params['userId'],
+                  ),
+        ),
+        'getCommunityImpact': _is.MethodConnector(
+          name: 'getCommunityImpact',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['impact'] as _ilxwsedw.ImpactEndpoint)
+                  .getCommunityImpact(session),
+        ),
+      },
+    );
+    connectors['snap'] = _is.EndpointConnector(
+      name: 'snap',
+      endpoint: endpoints['snap']!,
+      methodConnectors: {
+        'submitSnap': _is.MethodConnector(
+          name: 'submitSnap',
+          params: {
+            'snap': _is.ParameterDescription(
+              name: 'snap',
+              type: _is.getType<_idr2u3mw.Snap>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['snap'] as _its6ddlz.SnapEndpoint).submitSnap(
+                    session,
+                    params['snap'],
+                  ),
+        ),
+        'findMatchesForSnap': _is.MethodConnector(
+          name: 'findMatchesForSnap',
+          params: {
+            'snapId': _is.ParameterDescription(
+              name: 'snapId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+            'radiusMiles': _is.ParameterDescription(
+              name: 'radiusMiles',
+              type: _is.getType<double>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['snap'] as _its6ddlz.SnapEndpoint)
+                  .findMatchesForSnap(
+                    session,
+                    params['snapId'],
+                    radiusMiles: params['radiusMiles'],
+                  ),
+        ),
+        'streamNearbyBounties': _is.MethodStreamConnector(
+          name: 'streamNearbyBounties',
+          params: {},
+          streamParams: {},
+          returnType: _is.MethodStreamReturnType.streamType,
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+                Map<String, Stream> streamParams,
+              ) => (endpoints['snap'] as _its6ddlz.SnapEndpoint)
+                  .streamNearbyBounties(session),
         ),
       },
     );

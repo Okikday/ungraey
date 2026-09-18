@@ -1,0 +1,12 @@
+class: Snap
+table: snap
+fields:
+  userId: int
+  imageUrl: String
+  detectedCategories: List<MaterialCategory>
+  detectedLabels: List<String>
+  estimatedWeightKg: double
+  latitude: double
+  longitude: double
+  status: String, default='available'
+  createdAt: DateTime, default=now

@@ -34,6 +34,13 @@ dependencies:
     path: ../ungraey_client
   serverpod_flutter: 4.0.0
   serverpod_auth_idp_flutter: 4.0.0
+  flutter_riverpod: ^2.5.1
+  equatable: ^2.0.5
+  go_router: ^14.2.0
+  qr_flutter: ^4.1.0
+  image_picker: ^1.1.2
+  shared_preferences: ^2.2.3
+  intl: ^0.20.2
 
 dev_dependencies:
   # Used for agents to drive the app through the Dart MCP

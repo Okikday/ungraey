@@ -1,0 +1,11 @@
+enum: MaterialCategory
+values:
+  - corrugatedCardboard
+  - treatedLumber
+  - hardwoodScrap
+  - scrapDenimTextiles
+  - cleanGlassJars
+  - electronicsScrap
+  - metalScrap
+  - plasticContainers
+  - other

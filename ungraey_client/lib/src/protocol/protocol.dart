@@ -16,8 +16,21 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
     as _iaic;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'package:ungraey_client/src/protocol/bounty.dart' as _ia79p7gr;
+import 'bounty.dart' as _iiyby75a;
+import 'eco_impact.dart' as _i81kb3qt;
 import 'greetings/greeting.dart' as _izw8z7ou;
+import 'handoff_transaction.dart' as _iwb66hkj;
+import 'material_category.dart' as _iljslhxv;
+import 'reward_type.dart' as _isy11kxj;
+import 'snap.dart' as _id9obscz;
+export 'bounty.dart';
+export 'eco_impact.dart';
 export 'greetings/greeting.dart';
+export 'handoff_transaction.dart';
+export 'material_category.dart';
+export 'reward_type.dart';
+export 'snap.dart';
 export 'client.dart';
 
 class Protocol extends _isc.SerializationManager {
@@ -54,11 +67,64 @@ class Protocol extends _isc.SerializationManager {
       }
     }
 
+    if (t == _iiyby75a.Bounty) {
+      return _iiyby75a.Bounty.fromJson(data) as T;
+    }
+    if (t == _i81kb3qt.EcoImpact) {
+      return _i81kb3qt.EcoImpact.fromJson(data) as T;
+    }
     if (t == _izw8z7ou.Greeting) {
       return _izw8z7ou.Greeting.fromJson(data) as T;
     }
+    if (t == _iwb66hkj.HandoffTransaction) {
+      return _iwb66hkj.HandoffTransaction.fromJson(data) as T;
+    }
+    if (t == _iljslhxv.MaterialCategory) {
+      return _iljslhxv.MaterialCategory.fromJson(data) as T;
+    }
+    if (t == _isy11kxj.RewardType) {
+      return _isy11kxj.RewardType.fromJson(data) as T;
+    }
+    if (t == _id9obscz.Snap) {
+      return _id9obscz.Snap.fromJson(data) as T;
+    }
+    if (t == _isc.getType<_iiyby75a.Bounty?>()) {
+      return (data != null ? _iiyby75a.Bounty.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i81kb3qt.EcoImpact?>()) {
+      return (data != null ? _i81kb3qt.EcoImpact.fromJson(data) : null) as T;
+    }
     if (t == _isc.getType<_izw8z7ou.Greeting?>()) {
       return (data != null ? _izw8z7ou.Greeting.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_iwb66hkj.HandoffTransaction?>()) {
+      return (data != null ? _iwb66hkj.HandoffTransaction.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_iljslhxv.MaterialCategory?>()) {
+      return (data != null ? _iljslhxv.MaterialCategory.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_isy11kxj.RewardType?>()) {
+      return (data != null ? _isy11kxj.RewardType.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_id9obscz.Snap?>()) {
+      return (data != null ? _id9obscz.Snap.fromJson(data) : null) as T;
+    }
+    if (t == List<_iljslhxv.MaterialCategory>) {
+      return (data as List)
+              .map((e) => deserialize<_iljslhxv.MaterialCategory>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toList() as T;
+    }
+    if (t == List<_ia79p7gr.Bounty>) {
+      return (data as List)
+              .map((e) => deserialize<_ia79p7gr.Bounty>(e))
+              .toList()
+          as T;
     }
     try {
       return _iaic.Protocol().deserialize<T>(data, t);
@@ -71,7 +137,13 @@ class Protocol extends _isc.SerializationManager {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _iiyby75a.Bounty => 'Bounty',
+      _i81kb3qt.EcoImpact => 'EcoImpact',
       _izw8z7ou.Greeting => 'Greeting',
+      _iwb66hkj.HandoffTransaction => 'HandoffTransaction',
+      _iljslhxv.MaterialCategory => 'MaterialCategory',
+      _isy11kxj.RewardType => 'RewardType',
+      _id9obscz.Snap => 'Snap',
       _ => null,
     };
   }
@@ -86,8 +158,20 @@ class Protocol extends _isc.SerializationManager {
     }
 
     switch (data) {
+      case _iiyby75a.Bounty():
+        return 'Bounty';
+      case _i81kb3qt.EcoImpact():
+        return 'EcoImpact';
       case _izw8z7ou.Greeting():
         return 'Greeting';
+      case _iwb66hkj.HandoffTransaction():
+        return 'HandoffTransaction';
+      case _iljslhxv.MaterialCategory():
+        return 'MaterialCategory';
+      case _isy11kxj.RewardType():
+        return 'RewardType';
+      case _id9obscz.Snap():
+        return 'Snap';
     }
     className = _iaic.Protocol().getClassNameForObject(data);
     if (className != null) {
@@ -110,8 +194,26 @@ class Protocol extends _isc.SerializationManager {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
+    if (dataClassName == 'Bounty') {
+      return deserialize<_iiyby75a.Bounty>(data['data']);
+    }
+    if (dataClassName == 'EcoImpact') {
+      return deserialize<_i81kb3qt.EcoImpact>(data['data']);
+    }
     if (dataClassName == 'Greeting') {
       return deserialize<_izw8z7ou.Greeting>(data['data']);
+    }
+    if (dataClassName == 'HandoffTransaction') {
+      return deserialize<_iwb66hkj.HandoffTransaction>(data['data']);
+    }
+    if (dataClassName == 'MaterialCategory') {
+      return deserialize<_iljslhxv.MaterialCategory>(data['data']);
+    }
+    if (dataClassName == 'RewardType') {
+      return deserialize<_isy11kxj.RewardType>(data['data']);
+    }
+    if (dataClassName == 'Snap') {
+      return deserialize<_id9obscz.Snap>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);

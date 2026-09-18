@@ -9,5 +9,20 @@ emailIdp:
   - hasAccount:
 jwtRefresh:
   - refreshAccessToken:
+bounty:
+  - createBounty:
+  - listBounties:
+  - getBounty:
+  - cancelBounty:
+handoff:
+  - initiateHandoff:
+  - verifyAndCompleteHandoff:
+impact:
+  - getUserImpact:
+  - getCommunityImpact:
+snap:
+  - submitSnap:
+  - findMatchesForSnap:
+  - streamNearbyBounties:
 greeting:
   - hello:

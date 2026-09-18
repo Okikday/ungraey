@@ -17,3 +17,15 @@ pubspec_overrides.yaml
 
 # Serverpod Cloud CLI
 .scloud/
+
+# Secrets and Credentials (GitGuardian safeguards)
+*.env
+*.env.*
+.env
+config/passwords.yaml
+config/firebase_service_account_key.json
+*.pem
+*.key
+credentials.json
+service_account*.json
+
