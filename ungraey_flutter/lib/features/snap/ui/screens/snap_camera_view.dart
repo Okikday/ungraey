@@ -59,7 +59,10 @@ class SnapCameraView extends ConsumerWidget {
                             const SizedBox(height: 8),
                             Text(
                               'Estimated weight: ${state.estimatedTotalKg} kg',
-                              style: TextStyle(color: pure.textMuted, fontSize: 13),
+                              style: TextStyle(
+                                color: pure.textMuted,
+                                fontSize: 13,
+                              ),
                             ),
                           ],
                         ),
@@ -77,7 +80,10 @@ class SnapCameraView extends ConsumerWidget {
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.black.withValues(alpha: 0.6),
                     borderRadius: BorderRadius.circular(100),
@@ -112,7 +118,10 @@ class SnapCameraView extends ConsumerWidget {
                 const Spacer(),
                 IconButton(
                   onPressed: () => SnapActions.pickFromGallery(context, ref),
-                  icon: const Icon(Icons.photo_library_outlined, color: Colors.white),
+                  icon: const Icon(
+                    Icons.photo_library_outlined,
+                    color: Colors.white,
+                  ),
                   style: IconButton.styleFrom(
                     backgroundColor: Colors.black.withValues(alpha: 0.6),
                   ),
@@ -134,7 +143,9 @@ class SnapCameraView extends ConsumerWidget {
                 else ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: DetectedMaterialChips(regions: state.detectedRegions),
+                    child: DetectedMaterialChips(
+                      regions: state.detectedRegions,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   ShutterButton(

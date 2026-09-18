@@ -49,13 +49,13 @@ class SnapState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isScanning,
-        isProcessing,
-        capturedImagePath,
-        detectedRegions,
-        matchingBounties,
-        hasCaptured,
-        estimatedTotalKg,
-        totalPotentialEarningsCents,
-      ];
+    isScanning,
+    isProcessing,
+    capturedImagePath,
+    detectedRegions,
+    matchingBounties,
+    hasCaptured,
+    estimatedTotalKg,
+    totalPotentialEarningsCents,
+  ];
 }

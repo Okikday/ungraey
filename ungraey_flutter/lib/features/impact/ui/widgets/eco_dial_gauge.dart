@@ -65,9 +65,12 @@ class _EcoDialGaugeState extends State<EcoDialGauge>
               CustomPaint(
                 size: const Size(260, 260),
                 painter: _RingPainter(
-                  kgProgress: (widget.kgDiverted / 100).clamp(0.0, 1.0) * progress,
-                  co2Progress: (widget.co2eAvoided / 150).clamp(0.0, 1.0) * progress,
-                  treeProgress: (widget.treesEquivalent / 10).clamp(0.0, 1.0) * progress,
+                  kgProgress:
+                      (widget.kgDiverted / 100).clamp(0.0, 1.0) * progress,
+                  co2Progress:
+                      (widget.co2eAvoided / 150).clamp(0.0, 1.0) * progress,
+                  treeProgress:
+                      (widget.treesEquivalent / 10).clamp(0.0, 1.0) * progress,
                   primaryColor: pure.primary,
                   secondaryColor: pure.secondary,
                   trackColor: pure.surfaceHighlight,
@@ -96,7 +99,10 @@ class _EcoDialGaugeState extends State<EcoDialGauge>
                   ),
                   const SizedBox(height: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: pure.secondary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(100),
@@ -152,7 +158,14 @@ class _RingPainter extends CustomPainter {
     _drawArc(canvas, center, 82, 7, secondaryColor, treeProgress);
   }
 
-  void _drawArc(Canvas c, Offset center, double r, double w, Color color, double p) {
+  void _drawArc(
+    Canvas c,
+    Offset center,
+    double r,
+    double w,
+    Color color,
+    double p,
+  ) {
     final paint = Paint()
       ..color = color
       ..strokeWidth = w

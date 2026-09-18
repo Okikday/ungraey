@@ -3,8 +3,7 @@ import 'package:ungraey_client/ungraey_client.dart';
 import '../../../network/api.dart';
 import 'impact_state.dart';
 
-final _impactProvider =
-    NotifierProvider.autoDispose<ImpactPod, ImpactState>(
+final _impactProvider = NotifierProvider.autoDispose<ImpactPod, ImpactState>(
   ImpactPod.new,
   name: 'ImpactPod',
 );

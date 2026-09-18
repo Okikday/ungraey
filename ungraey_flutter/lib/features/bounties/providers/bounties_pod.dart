@@ -5,9 +5,9 @@ import 'bounties_state.dart';
 
 final _bountiesProvider =
     NotifierProvider.autoDispose<BountiesPod, BountiesState>(
-  BountiesPod.new,
-  name: 'BountiesPod',
-);
+      BountiesPod.new,
+      name: 'BountiesPod',
+    );
 
 /// Manages the bounty marketplace feed, distance filtering, search, and posting.
 class BountiesPod extends AutoDisposeNotifier<BountiesState> {
@@ -16,7 +16,7 @@ class BountiesPod extends AutoDisposeNotifier<BountiesState> {
   @override
   BountiesState build() {
     Future.microtask(loadBounties);
-    return const BountiesState();
+    return BountiesState(bounties: Api.mockBounties);
   }
 
   void updateSearch(String query) {

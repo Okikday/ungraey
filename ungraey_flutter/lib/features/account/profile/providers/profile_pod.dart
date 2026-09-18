@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'profile_state.dart';
 
-final _profileProvider =
-    NotifierProvider.autoDispose<ProfilePod, ProfileState>(
+final _profileProvider = NotifierProvider.autoDispose<ProfilePod, ProfileState>(
   ProfilePod.new,
   name: 'ProfilePod',
 );
@@ -14,5 +13,9 @@ class ProfilePod extends AutoDisposeNotifier<ProfileState> {
   @override
   ProfileState build() {
     return const ProfileState();
+  }
+
+  void refresh() {
+    state = const ProfileState();
   }
 }

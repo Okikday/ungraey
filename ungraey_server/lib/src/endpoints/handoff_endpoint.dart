@@ -19,7 +19,8 @@ class HandoffEndpoint extends Endpoint {
     }
 
     final randomStr = Random().nextInt(999999).toString().padLeft(6, '0');
-    final qrToken = 'UNGRAEY-${DateTime.now().millisecondsSinceEpoch}-$randomStr';
+    final qrToken =
+        'UNGRAEY-${DateTime.now().millisecondsSinceEpoch}-$randomStr';
 
     final kg = snap.estimatedWeightKg;
     final co2e = kg * 1.6; // Default carbon savings conversion
@@ -80,7 +81,12 @@ class HandoffEndpoint extends Endpoint {
     }
 
     // Update seller EcoImpact
-    await _creditUserImpact(session, tx.sellerId, tx.kgDiverted, tx.co2eSavedKg);
+    await _creditUserImpact(
+      session,
+      tx.sellerId,
+      tx.kgDiverted,
+      tx.co2eSavedKg,
+    );
     // Update buyer EcoImpact
     await _creditUserImpact(session, tx.buyerId, tx.kgDiverted, tx.co2eSavedKg);
 
@@ -98,8 +104,10 @@ class HandoffEndpoint extends Endpoint {
       where: (t) => t.userId.equals(userId),
     );
 
-    final trees = co2eSavedKg / 21.0; // ~21kg CO2 absorbed per urban tree per year
-    final water = kgDiverted * 15.0; // ~15L water saved per kg recycled cardboard/wood
+    final trees =
+        co2eSavedKg / 21.0; // ~21kg CO2 absorbed per urban tree per year
+    final water =
+        kgDiverted * 15.0; // ~15L water saved per kg recycled cardboard/wood
 
     if (existing.isEmpty) {
       final record = EcoImpact(

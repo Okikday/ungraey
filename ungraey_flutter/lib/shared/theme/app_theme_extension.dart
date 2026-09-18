@@ -38,7 +38,7 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
   static const dark = <AppThemeExtension>[
     AppThemeExtension(
       cardGradient: LinearGradient(
-        colors: [Color(0xFF1E2622), Color(0xFF111714)],
+        colors: [Color(0xFF1E1E22), Color(0xFF111114)],
         stops: [0.54, 1.0],
         begin: Alignment.topLeft,
         end: Alignment.bottomCenter,

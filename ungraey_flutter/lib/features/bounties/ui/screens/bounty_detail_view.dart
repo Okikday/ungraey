@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/enums/material_category.dart';
+import '../../../../network/api.dart';
 import '../../../../shared/components/scale_click_wrapper.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../../handoff/ui/actions/handoff_actions.dart';
@@ -20,7 +21,10 @@ class BountyDetailModal extends ConsumerWidget {
       (b) => b.id == bountyId,
       orElse: () => bounties.isNotEmpty
           ? bounties.first
-          : throw StateError('No bounty found'),
+          : Api.mockBounties.firstWhere(
+              (b) => b.id == bountyId,
+              orElse: () => Api.mockBounties.first,
+            ),
     );
 
     final cat = bounty.category;
@@ -101,7 +105,9 @@ class BountyDetailModal extends ConsumerWidget {
             child: Row(
               children: [
                 Icon(
-                  isCash ? Icons.monetization_on_rounded : Icons.swap_horiz_rounded,
+                  isCash
+                      ? Icons.monetization_on_rounded
+                      : Icons.swap_horiz_rounded,
                   color: pure.primary,
                   size: 22,
                 ),

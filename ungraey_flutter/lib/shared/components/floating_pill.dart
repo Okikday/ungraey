@@ -49,7 +49,11 @@ class FloatingSearchFilterPill extends StatelessWidget {
               minimumSize: const Size(30, 30),
             ),
             onPressed: onSearchTap,
-            icon: Icon(Icons.search_rounded, size: 18, color: pure.textSecondary),
+            icon: Icon(
+              Icons.search_rounded,
+              size: 18,
+              color: pure.textSecondary,
+            ),
           ),
           const SizedBox(width: 4),
           Expanded(

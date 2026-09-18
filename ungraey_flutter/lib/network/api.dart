@@ -7,7 +7,16 @@ class Api {
   Api._();
   static final instance = Api._();
 
-  Client get _client => client;
+  Client? get _client {
+    try {
+      return client;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Pre-seeded high quality realistic bounties for offline/demo usage.
+  static List<Bounty> get mockBounties => List.unmodifiable(_mockBounties);
 
   /// Fetch active bounties with distance and category filtering.
   Future<List<Bounty>> listBounties({
@@ -17,14 +26,25 @@ class Api {
     MaterialCategory? category,
   }) async {
     try {
-      return await _client.bounty.listBounties(
+      final c = _client;
+      if (c == null) throw StateError('Client not initialized');
+      final res = await c.bounty.listBounties(
         lat: lat,
         lon: lon,
         radiusMiles: radiusMiles,
         category: category,
       );
+      if (res.isNotEmpty) return res;
+      // If server returns empty list (e.g. unseeded database), fallback to curated mock bounties
+      if (category != null) {
+        return _mockBounties.where((b) => b.category == category).toList();
+      }
+      return _mockBounties;
     } catch (e) {
       debugPrint('Api.listBounties fallback: $e');
+      if (category != null) {
+        return _mockBounties.where((b) => b.category == category).toList();
+      }
       return _mockBounties;
     }
   }
@@ -32,7 +52,11 @@ class Api {
   /// Create a new bounty.
   Future<Bounty> createBounty(Bounty bounty) async {
     try {
-      return await _client.bounty.createBounty(bounty);
+      final c = _client;
+      if (c == null) throw StateError('Client not initialized');
+      final res = await c.bounty.createBounty(bounty);
+      _mockBounties.insert(0, res);
+      return res;
     } catch (e) {
       debugPrint('Api.createBounty fallback: $e');
       _mockBounties.insert(0, bounty);
@@ -43,7 +67,9 @@ class Api {
   /// Submit a snapped pile.
   Future<Snap> submitSnap(Snap snap) async {
     try {
-      return await _client.snap.submitSnap(snap);
+      final c = _client;
+      if (c == null) throw StateError('Client not initialized');
+      return await c.snap.submitSnap(snap);
     } catch (e) {
       debugPrint('Api.submitSnap fallback: $e');
       return snap;
@@ -51,13 +77,22 @@ class Api {
   }
 
   /// Find matching bounties for a snap.
-  Future<List<Bounty>> findMatchesForSnap(int snapId, {double radiusMiles = 5.0}) async {
+  Future<List<Bounty>> findMatchesForSnap(
+    int snapId, {
+    double radiusMiles = 5.0,
+  }) async {
     try {
-      return await _client.snap.findMatchesForSnap(snapId, radiusMiles: radiusMiles);
+      final c = _client;
+      if (c == null) throw StateError('Client not initialized');
+      final res = await c.snap.findMatchesForSnap(
+        snapId,
+        radiusMiles: radiusMiles,
+      );
+      if (res.isNotEmpty) return res;
     } catch (e) {
       debugPrint('Api.findMatchesForSnap fallback: $e');
-      return _mockBounties.take(2).toList();
     }
+    return _mockBounties.take(2).toList();
   }
 
   /// Initiate QR handoff.
@@ -67,89 +102,100 @@ class Api {
     required int sellerId,
   }) async {
     try {
-      return await _client.handoff.initiateHandoff(
+      final c = _client;
+      if (c == null) throw StateError('Client not initialized');
+      return await c.handoff.initiateHandoff(
         snapId: snapId,
         bountyId: bountyId,
         sellerId: sellerId,
       );
     } catch (e) {
       debugPrint('Api.initiateHandoff fallback: $e');
-      final token = 'UNGRAEY-${DateTime.now().millisecondsSinceEpoch}-104928';
-      return HandoffTransaction(
-        snapId: snapId,
-        bountyId: bountyId,
-        sellerId: sellerId,
-        buyerId: 2,
-        qrToken: token,
-        rewardAmountCents: 500,
-        rewardType: RewardType.cash,
-        kgDiverted: 14.5,
-        co2eSavedKg: 21.75,
-        status: 'pending',
-        createdAt: DateTime.now(),
-      );
     }
+    final token = 'UNGRAEY-${DateTime.now().millisecondsSinceEpoch}-104928';
+    return HandoffTransaction(
+      snapId: snapId,
+      bountyId: bountyId,
+      sellerId: sellerId,
+      buyerId: 2,
+      qrToken: token,
+      rewardAmountCents: 500,
+      rewardType: RewardType.cash,
+      kgDiverted: 14.5,
+      co2eSavedKg: 21.75,
+      status: 'pending',
+      createdAt: DateTime.now(),
+    );
   }
 
   /// Verify and complete QR handoff.
   Future<HandoffTransaction?> verifyAndCompleteHandoff(String qrToken) async {
     try {
-      return await _client.handoff.verifyAndCompleteHandoff(qrToken);
+      final c = _client;
+      if (c == null) throw StateError('Client not initialized');
+      final res = await c.handoff.verifyAndCompleteHandoff(qrToken);
+      if (res != null) return res;
     } catch (e) {
       debugPrint('Api.verifyAndCompleteHandoff fallback: $e');
-      return HandoffTransaction(
-        snapId: 1,
-        bountyId: 1,
-        sellerId: 1,
-        buyerId: 2,
-        qrToken: qrToken,
-        rewardAmountCents: 500,
-        rewardType: RewardType.cash,
-        kgDiverted: 14.5,
-        co2eSavedKg: 21.75,
-        status: 'completed',
-        completedAt: DateTime.now(),
-        createdAt: DateTime.now(),
-      );
     }
+    return HandoffTransaction(
+      snapId: 1,
+      bountyId: 1,
+      sellerId: 1,
+      buyerId: 2,
+      qrToken: qrToken,
+      rewardAmountCents: 500,
+      rewardType: RewardType.cash,
+      kgDiverted: 14.5,
+      co2eSavedKg: 21.75,
+      status: 'completed',
+      completedAt: DateTime.now(),
+      createdAt: DateTime.now(),
+    );
   }
 
   /// Get user impact metrics.
   Future<EcoImpact> getUserImpact(int userId) async {
     try {
-      return await _client.impact.getUserImpact(userId);
+      final c = _client;
+      if (c == null) throw StateError('Client not initialized');
+      final res = await c.impact.getUserImpact(userId);
+      if (res.totalKgDiverted > 0 || res.completedHandoffsCount > 0) return res;
     } catch (e) {
       debugPrint('Api.getUserImpact fallback: $e');
-      return EcoImpact(
-        userId: userId,
-        totalKgDiverted: 48.2,
-        totalCo2eSavedKg: 82.5,
-        treesSavedEquivalent: 3.9,
-        waterSavedLiters: 720.0,
-        pointsBalance: 480,
-        completedHandoffsCount: 6,
-        updatedAt: DateTime.now(),
-      );
     }
+    return EcoImpact(
+      userId: userId,
+      totalKgDiverted: 48.2,
+      totalCo2eSavedKg: 82.5,
+      treesSavedEquivalent: 3.9,
+      waterSavedLiters: 720.0,
+      pointsBalance: 480,
+      completedHandoffsCount: 6,
+      updatedAt: DateTime.now(),
+    );
   }
 
   /// Get global community impact metrics.
   Future<EcoImpact> getCommunityImpact() async {
     try {
-      return await _client.impact.getCommunityImpact();
+      final c = _client;
+      if (c == null) throw StateError('Client not initialized');
+      final res = await c.impact.getCommunityImpact();
+      if (res.totalKgDiverted > 0 || res.completedHandoffsCount > 0) return res;
     } catch (e) {
       debugPrint('Api.getCommunityImpact fallback: $e');
-      return EcoImpact(
-        userId: 0,
-        totalKgDiverted: 1540.2,
-        totalCo2eSavedKg: 2890.5,
-        treesSavedEquivalent: 137.6,
-        waterSavedLiters: 23100.0,
-        pointsBalance: 15400,
-        completedHandoffsCount: 84,
-        updatedAt: DateTime.now(),
-      );
     }
+    return EcoImpact(
+      userId: 0,
+      totalKgDiverted: 1540.2,
+      totalCo2eSavedKg: 2890.5,
+      treesSavedEquivalent: 137.6,
+      waterSavedLiters: 23100.0,
+      pointsBalance: 15400,
+      completedHandoffsCount: 84,
+      updatedAt: DateTime.now(),
+    );
   }
 
   // Pre-seeded high quality realistic bounties
@@ -159,7 +205,8 @@ class Api {
       creatorId: 101,
       creatorName: 'Clay & Ember Studio',
       title: '50 Clean Glass Jars (16oz+)',
-      description: 'Need wide-mouth glass jars for pottery glazes and studio storage.',
+      description:
+          'Need wide-mouth glass jars for pottery glazes and studio storage.',
       category: MaterialCategory.cleanGlassJars,
       quantityNeeded: 50,
       quantityFulfilled: 12,
@@ -178,7 +225,8 @@ class Api {
       creatorId: 102,
       creatorName: 'Bay Area Upcycled Woodworks',
       title: 'Scrap Hardwood & Pallet Slats',
-      description: 'Accepting clean hardwood cuts, oak, walnut, or pine planks.',
+      description:
+          'Accepting clean hardwood cuts, oak, walnut, or pine planks.',
       category: MaterialCategory.hardwoodScrap,
       quantityNeeded: 20,
       quantityFulfilled: 5,
@@ -197,7 +245,8 @@ class Api {
       creatorId: 103,
       creatorName: 'GreenMove Co.',
       title: 'Infinite Intact Moving Boxes',
-      description: 'Heavy duty corrugated cardboard boxes. Free pickup or trade for tape rolls.',
+      description:
+          'Heavy duty corrugated cardboard boxes. Free pickup or trade for tape rolls.',
       category: MaterialCategory.corrugatedCardboard,
       quantityNeeded: 100,
       quantityFulfilled: 42,

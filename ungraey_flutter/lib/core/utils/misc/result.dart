@@ -6,14 +6,14 @@ sealed class Result<T> {
   bool get isFailure => this is Failure<T>;
 
   T? get dataOrNull => switch (this) {
-        Success(:final data) => data,
-        Failure() => null,
-      };
+    Success(:final data) => data,
+    Failure() => null,
+  };
 
   String? get errorOrNull => switch (this) {
-        Success() => null,
-        Failure(:final message) => message,
-      };
+    Success() => null,
+    Failure(:final message) => message,
+  };
 
   static Result<T> success<T>(T data) => Success(data);
   static Result<T> failure<T>(String message, [Object? exception]) =>

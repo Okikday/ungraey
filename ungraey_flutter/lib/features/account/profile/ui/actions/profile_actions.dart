@@ -16,6 +16,11 @@ class ProfileActions {
     );
   }
 
+  /// Initiates cash withdrawal from profile view.
+  static void withdrawCash(BuildContext context, dynamic ref) {
+    withdrawEarnings(context, 185.20);
+  }
+
   /// Opens application settings sheet.
   static void openSettings(BuildContext context) {
     showModalBottomSheet<void>(
@@ -40,14 +45,33 @@ class ProfileActions {
             ),
             const SizedBox(height: 16),
             ListTile(
-              leading: const Icon(Icons.notifications_active_outlined, color: Color(0xFF10B981)),
-              title: const Text('Real-time 5-Mile Bounties Alerts', style: TextStyle(color: Colors.white)),
-              trailing: Switch(value: true, onChanged: (_) {}, activeThumbColor: const Color(0xFF10B981)),
+              leading: const Icon(
+                Icons.notifications_active_outlined,
+                color: Color(0xFF10B981),
+              ),
+              title: const Text(
+                'Real-time 5-Mile Bounties Alerts',
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: Switch(
+                value: true,
+                onChanged: (_) {},
+                activeThumbColor: const Color(0xFF10B981),
+              ),
             ),
             ListTile(
-              leading: const Icon(Icons.location_on_outlined, color: Color(0xFF10B981)),
-              title: const Text('Background Proximity Radius', style: TextStyle(color: Colors.white)),
-              subtitle: const Text('Active within 5 miles', style: TextStyle(color: Colors.white60)),
+              leading: const Icon(
+                Icons.location_on_outlined,
+                color: Color(0xFF10B981),
+              ),
+              title: const Text(
+                'Background Proximity Radius',
+                style: TextStyle(color: Colors.white),
+              ),
+              subtitle: const Text(
+                'Active within 5 miles',
+                style: TextStyle(color: Colors.white60),
+              ),
             ),
             const SizedBox(height: 12),
           ],

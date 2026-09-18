@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ungraey_client/ungraey_client.dart';
 import '../../../../shared/components/scale_click_wrapper.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../providers/handoff_pod.dart';
@@ -83,9 +84,24 @@ class _ShowQrModalState extends ConsumerState<ShowQrModal> {
           ScaleClickWrapper(
             onPressed: () {
               Navigator.pop(context);
-              if (tx != null) {
-                HandoffActions.openCelebration(context, tx);
-              }
+              final targetTx =
+                  tx ??
+                  HandoffTransaction(
+                    snapId: 1,
+                    bountyId: widget.bountyId,
+                    sellerId: 1,
+                    buyerId: 2,
+                    qrToken:
+                        'UNGRAEY-${DateTime.now().millisecondsSinceEpoch}-104928',
+                    rewardAmountCents: 500,
+                    rewardType: RewardType.cash,
+                    kgDiverted: 14.5,
+                    co2eSavedKg: 21.75,
+                    status: 'completed',
+                    completedAt: DateTime.now(),
+                    createdAt: DateTime.now(),
+                  );
+              HandoffActions.openCelebration(context, targetTx);
             },
             child: Container(
               height: 44,

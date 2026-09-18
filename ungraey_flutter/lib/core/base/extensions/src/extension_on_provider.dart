@@ -14,8 +14,10 @@ extension NotifierProviderX<TNotifier extends Notifier<TState>, TState>
 
 /// Extension helpers on [AutoDisposeNotifierProvider].
 extension AutoDisposeNotifierProviderX<
-    TNotifier extends AutoDisposeNotifier<TState>,
-    TState> on AutoDisposeNotifierProvider<TNotifier, TState> {
+  TNotifier extends AutoDisposeNotifier<TState>,
+  TState
+>
+    on AutoDisposeNotifierProvider<TNotifier, TState> {
   TState watch(WidgetRef ref) => ref.watch(this);
   TState read(WidgetRef ref) => ref.read(this);
   TNotifier not(WidgetRef ref) => ref.read(notifier);

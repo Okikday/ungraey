@@ -29,7 +29,9 @@ class BountyEndpoint extends Endpoint {
       session,
       where: (t) =>
           t.status.equals('active') &
-          (category != null ? t.category.equals(category) : Constant.bool(true)),
+          (category != null
+              ? t.category.equals(category)
+              : Constant.bool(true)),
       orderBy: (t) => t.createdAt.desc(),
     );
 
@@ -71,7 +73,8 @@ class BountyEndpoint extends Endpoint {
     double lon2,
   ) {
     const p = 0.017453292519943295; // Math.PI / 180
-    final a = 0.5 -
+    final a =
+        0.5 -
         cos((lat2 - lat1) * p) / 2 +
         cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
     // 12742 km * 0.621371 = ~7917.5 miles

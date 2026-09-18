@@ -9,7 +9,7 @@ class SnapEndpoint extends Endpoint {
     final inserted = await Snap.db.insertRow(session, snap);
 
     // Broadcast new snap alert to nearby makers
-    session.messages.postMessage(
+    await session.messages.postMessage(
       'nearby_snaps',
       inserted,
     );
@@ -32,8 +32,7 @@ class SnapEndpoint extends Endpoint {
     );
 
     final matching = activeBounties.where((bounty) {
-      final categoryMatches =
-          snap.detectedCategories.contains(bounty.category);
+      final categoryMatches = snap.detectedCategories.contains(bounty.category);
       if (!categoryMatches) return false;
 
       final distance = _calculateHaversineMiles(
@@ -50,8 +49,7 @@ class SnapEndpoint extends Endpoint {
 
   /// Real-time stream of nearby bounty alerts.
   Stream<Bounty> streamNearbyBounties(Session session) async* {
-    final stream =
-        session.messages.createStream<Bounty>('nearby_bounties');
+    final stream = session.messages.createStream<Bounty>('nearby_bounties');
     await for (final bounty in stream) {
       yield bounty;
     }
@@ -64,7 +62,8 @@ class SnapEndpoint extends Endpoint {
     double lon2,
   ) {
     const p = 0.017453292519943295;
-    final a = 0.5 -
+    final a =
+        0.5 -
         cos((lat2 - lat1) * p) / 2 +
         cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
     return 7917.5 * asin(sqrt(a));

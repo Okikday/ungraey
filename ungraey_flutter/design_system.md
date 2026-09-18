@@ -320,3 +320,56 @@ Real-time bid and supply pings drop down from the top status bar:
 - **Entrance Motion**: Slides down from `-60px` with `KCurves.bouncySpring`.
 - **Auto-Dismiss**: Resides for `4000ms`, then slides upward smoothly.
 - **Interactive**: Tapping immediately opens the bounty details or match preview.
+
+---
+
+## 20. The Floating Pill Dock & Animated Highlight Indicator
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│  [ 🏠 Home ]   [ 👥 Bounties ]   [ 📷 Snap ]   [ 👤 Profile ]   │  ( ⚡ ) │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Backdrop Clearance**: The navigation area is backed by `BackdropShadow(height: bottomPadding + 72)` ensuring scrollable content dissolves naturally behind the floating pill.
+2. **Squircle Pill Geometry**:
+   - Height: `68px`.
+   - Border radius: `BorderRadius.circular(1000)`.
+   - Border: `1.0px` hairline with `onSurface.withValues(alpha: 0.12)`.
+   - Background: `theme.colorScheme.surface` with subtle elevation shadow (`BoxShadow(color: Colors.black12, blurRadius: 16, offset: Offset(0, 4))`).
+3. **Animated Highlight Indicator**:
+   - Uses `AnimatedPositioned` with `curve: KCurves.bouncySpring` and `duration: Duration(milliseconds: 600)`.
+   - Sliding rounded pill (`width: 68`, `height: 56`, `borderRadius: 40`) filled with `onSurface.withValues(alpha: 0.15)`.
+   - Tracks active tab changes smoothly without double-rebuild stutter.
+
+---
+
+## 21. Floating Frosted Context Menu & Special Action Button
+
+1. **Special Action Button**:
+   - Mini circular FAB adjacent to the dock.
+   - Animated rotating icon transition (`RotationTransition` + `FadeTransition`, 220ms).
+2. **Frosted Context Menu (`FloatingContextMenu`)**:
+   - Dismissible modal dialog anchored precisely above the trigger button.
+   - Fullscreen barrier with subtle dim (`Colors.black.withValues(alpha: 0.35)`).
+   - Glassmorphic card container:
+     - `BackdropFilter(filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20))`.
+     - Background: `pure.card.withValues(alpha: 0.5)`.
+     - Border: `pure.border.withValues(alpha: 0.7)`.
+     - Animation: `.scaleXY(alignment: Alignment.bottomRight, curve: KCurves.bouncySpring, duration: 700ms).fadeIn()`.
+   - Action item rows include rounded circular icon badges (`36x36`), title, subtitle, and `ScaleClickWrapper` with `HapticFeedback.selectionClick()`.
+
+---
+
+## 22. Horizontal Pinned Carousels & Inset Grouped Sections
+
+1. **Horizontal Pinned Cards**:
+   - Squircle containers (`BorderRadius.circular(20)`), dimensions `242x82` or `250x168`.
+   - Background: `pure.cardGradient` or `primary.blendColor(scaffoldBackground, 0.4)`.
+   - Micro-tags (`BlurredTag`): `BackdropFilter(sigmaX: 2, sigmaY: 2)`, `borderRadius: 100`, compact font size (`10px`).
+   - Stacked buyer/member circles (`SpaceAvatarGroup`): 1 to 3 overlapping circles with `1.5px` card background borders.
+2. **Inset Grouped Settings Cards**:
+   - iOS-inspired section containers (`BorderRadius.circular(16)`), hairline dividers between rows.
+   - Rounded square icon containers (`34x34`, `BorderRadius.circular(9)`).
+   - Right-aligned disclosure chevrons and interactive switches.
+

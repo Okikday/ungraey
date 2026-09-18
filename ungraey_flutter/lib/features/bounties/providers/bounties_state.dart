@@ -43,8 +43,9 @@ class BountiesState extends Equatable {
   }) {
     return BountiesState(
       bounties: bounties ?? this.bounties,
-      selectedCategory:
-          clearCategory ? null : (selectedCategory ?? this.selectedCategory),
+      selectedCategory: clearCategory
+          ? null
+          : (selectedCategory ?? this.selectedCategory),
       searchQuery: searchQuery ?? this.searchQuery,
       radiusMiles: radiusMiles ?? this.radiusMiles,
       isLoading: isLoading ?? this.isLoading,
@@ -53,10 +54,10 @@ class BountiesState extends Equatable {
 
   @override
   List<Object?> get props => [
-        bounties,
-        selectedCategory,
-        searchQuery,
-        radiusMiles,
-        isLoading,
-      ];
+    bounties,
+    selectedCategory,
+    searchQuery,
+    radiusMiles,
+    isLoading,
+  ];
 }

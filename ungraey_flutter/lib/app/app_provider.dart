@@ -18,8 +18,9 @@ class AppPod extends Notifier<AppState> {
 
   void toggleTheme() {
     state = state.copyWith(
-      themeMode:
-          state.themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark,
+      themeMode: state.themeMode == ThemeMode.dark
+          ? ThemeMode.light
+          : ThemeMode.dark,
     );
   }
 

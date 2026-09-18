@@ -22,12 +22,12 @@ class ProfileState extends Equatable {
 
   @override
   List<Object?> get props => [
-        name,
-        handle,
-        neighborhood,
-        walletBalanceDollars,
-        pointsBalance,
-        completedHandoffs,
-        rating,
-      ];
+    name,
+    handle,
+    neighborhood,
+    walletBalanceDollars,
+    pointsBalance,
+    completedHandoffs,
+    rating,
+  ];
 }

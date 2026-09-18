@@ -17,7 +17,11 @@ class ImpactActions {
   }
 
   /// Displays detail modal for milestone trophies.
-  static void openTrophyDetails(BuildContext context, String trophyName, String desc) {
+  static void openTrophyDetails(
+    BuildContext context,
+    String trophyName,
+    String desc,
+  ) {
     showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(

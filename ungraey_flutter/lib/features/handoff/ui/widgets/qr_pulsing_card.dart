@@ -80,7 +80,9 @@ class QrPulsingCard extends StatelessWidget {
               Text(
                 '$mins:$secs remaining',
                 style: TextStyle(
-                  color: secondsRemaining < 30 ? pure.error : pure.textSecondary,
+                  color: secondsRemaining < 30
+                      ? pure.error
+                      : pure.textSecondary,
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                   fontFeatures: const [FontFeature.tabularFigures()],

@@ -20,12 +20,13 @@ class AppTheme {
         surface: pureDark.surface,
         error: pureDark.error,
       ),
-      textTheme: GoogleFonts.interTextTheme(
-        ThemeData.dark().textTheme,
-      ).apply(
-        bodyColor: pureDark.textPrimary,
-        displayColor: pureDark.textPrimary,
-      ),
+      textTheme:
+          GoogleFonts.interTextTheme(
+            ThemeData.dark().textTheme,
+          ).apply(
+            bodyColor: pureDark.textPrimary,
+            displayColor: pureDark.textPrimary,
+          ),
       extensions: const <ThemeExtension<dynamic>>[
         pureDark,
         ...AppThemeExtension.dark,
@@ -45,12 +46,13 @@ class AppTheme {
         surface: pureLight.surface,
         error: pureLight.error,
       ),
-      textTheme: GoogleFonts.interTextTheme(
-        ThemeData.light().textTheme,
-      ).apply(
-        bodyColor: pureLight.textPrimary,
-        displayColor: pureLight.textPrimary,
-      ),
+      textTheme:
+          GoogleFonts.interTextTheme(
+            ThemeData.light().textTheme,
+          ).apply(
+            bodyColor: pureLight.textPrimary,
+            displayColor: pureLight.textPrimary,
+          ),
       extensions: const <ThemeExtension<dynamic>>[
         pureLight,
         ...AppThemeExtension.light,

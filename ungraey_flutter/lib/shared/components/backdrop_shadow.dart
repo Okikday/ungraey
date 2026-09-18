@@ -25,7 +25,11 @@ class BackdropShadow extends StatelessWidget {
 
     return ClipRRect(
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2, tileMode: TileMode.decal),
+        filter: ImageFilter.blur(
+          sigmaX: 2,
+          sigmaY: 2,
+          tileMode: TileMode.decal,
+        ),
         enabled: applyBlur,
         child: ShaderMask(
           shaderCallback: (Rect bounds) {

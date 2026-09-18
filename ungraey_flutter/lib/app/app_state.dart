@@ -40,11 +40,11 @@ class AppState extends Equatable {
 
   @override
   List<Object?> get props => [
-        themeMode,
-        isAuthenticated,
-        currentUserId,
-        currentUserDisplayName,
-        currentLatitude,
-        currentLongitude,
-      ];
+    themeMode,
+    isAuthenticated,
+    currentUserId,
+    currentUserDisplayName,
+    currentLatitude,
+    currentLongitude,
+  ];
 }

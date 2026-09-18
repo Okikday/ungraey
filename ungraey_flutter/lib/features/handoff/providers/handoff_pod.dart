@@ -4,8 +4,7 @@ import 'package:ungraey_client/ungraey_client.dart';
 import '../../../network/api.dart';
 import 'handoff_state.dart';
 
-final _handoffProvider =
-    NotifierProvider.autoDispose<HandoffPod, HandoffState>(
+final _handoffProvider = NotifierProvider.autoDispose<HandoffPod, HandoffState>(
   HandoffPod.new,
   name: 'HandoffPod',
 );

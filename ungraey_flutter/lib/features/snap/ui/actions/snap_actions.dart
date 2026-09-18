@@ -9,7 +9,10 @@ class SnapActions {
   const SnapActions._();
 
   /// Captures a photo using device camera or runs simulated high-accuracy scan.
-  static Future<void> triggerShutter(BuildContext context, WidgetRef ref) async {
+  static Future<void> triggerShutter(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     try {
       final picker = ImagePicker();
       final photo = await picker.pickImage(
@@ -17,7 +20,9 @@ class SnapActions {
         imageQuality: 85,
       );
       if (photo != null) {
-        await ref.read(SnapPod.me.notifier).captureAndMatch(imagePath: photo.path);
+        await ref
+            .read(SnapPod.me.notifier)
+            .captureAndMatch(imagePath: photo.path);
         return;
       }
     } catch (_) {
@@ -27,7 +32,10 @@ class SnapActions {
   }
 
   /// Picks an existing photo from the device photo gallery.
-  static Future<void> pickFromGallery(BuildContext context, WidgetRef ref) async {
+  static Future<void> pickFromGallery(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     try {
       final picker = ImagePicker();
       final image = await picker.pickImage(
@@ -35,7 +43,9 @@ class SnapActions {
         imageQuality: 85,
       );
       if (image != null) {
-        await ref.read(SnapPod.me.notifier).captureAndMatch(imagePath: image.path);
+        await ref
+            .read(SnapPod.me.notifier)
+            .captureAndMatch(imagePath: image.path);
         return;
       }
     } catch (_) {}

@@ -3,8 +3,10 @@ import '../../../network/api.dart';
 import '../logic/material_classifier.dart';
 import 'snap_state.dart';
 
-final _snapProvider =
-    NotifierProvider.autoDispose<SnapPod, SnapState>(SnapPod.new, name: 'SnapPod');
+final _snapProvider = NotifierProvider.autoDispose<SnapPod, SnapState>(
+  SnapPod.new,
+  name: 'SnapPod',
+);
 
 /// Manages camera capture, AI material classification, and 5-mile matching.
 class SnapPod extends AutoDisposeNotifier<SnapState> {
@@ -55,7 +57,9 @@ class SnapPod extends AutoDisposeNotifier<SnapState> {
       hasCaptured: true,
       capturedImagePath: imagePath ?? 'simulated_garage_waste.jpg',
       detectedRegions: regions,
-      matchingBounties: matching.isNotEmpty ? matching : allBounties.take(2).toList(),
+      matchingBounties: matching.isNotEmpty
+          ? matching
+          : allBounties.take(2).toList(),
       estimatedTotalKg: totalKg > 0 ? totalKg : 14.5,
       totalPotentialEarningsCents: totalEarnable,
     );

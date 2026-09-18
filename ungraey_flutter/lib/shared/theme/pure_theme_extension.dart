@@ -124,19 +124,19 @@ class PureThemeExtension extends ThemeExtension<PureThemeExtension> {
 
 /// Auxiliary and non-main semantic colors exposed as getters on [PureThemeExtension].
 extension PureThemeExtensionExtras on PureThemeExtension {
-  // Surfaces & Overlays
+  // Surfaces & Overlays — dark mode uses neutral blacks, no green tint on surfaces
   Color get surfaceCardAlpha =>
-      isDark ? const Color(0xCC1A211D) : const Color(0xCCFFFFFF);
+      isDark ? const Color(0xCC18181B) : const Color(0xCCFFFFFF);
   Color get backgroundOverlay =>
-      isDark ? const Color(0xB8090D0B) : const Color(0x66000000);
+      isDark ? const Color(0xB8090909) : const Color(0x66000000);
   Color get avatarBackground =>
-      isDark ? const Color(0xFF222B25) : const Color(0xFFE8EFEA);
+      isDark ? const Color(0xFF232326) : const Color(0xFFE8EFEA);
   Color get navBarBackground =>
-      isDark ? const Color(0xE6131A16) : const Color(0xF0FFFFFF);
+      isDark ? const Color(0xE6101012) : const Color(0xF0FFFFFF);
   Color get surfaceHighlight =>
-      isDark ? const Color(0xFF242E28) : const Color(0xFFEFF5F0);
+      isDark ? const Color(0xFF242427) : const Color(0xFFEFF5F0);
 
-  // Badges & Indicators
+  // Badges & Indicators — primary green used only for brand badges
   Color get badgeBackground =>
       isDark ? const Color(0x3310B981) : const Color(0xFFD1FAE5);
   Color get badgeText =>
@@ -150,9 +150,9 @@ extension PureThemeExtensionExtras on PureThemeExtension {
 
   // Typography & Subtleties
   Color get textSubtle =>
-      isDark ? const Color(0xFF8C9B92) : const Color(0xFF6B7280);
+      isDark ? const Color(0xFF8E8E99) : const Color(0xFF6B7280);
   Color get textCategory =>
-      isDark ? const Color(0xFF9EAEA4) : const Color(0xFF4B5563);
+      isDark ? const Color(0xFFA0A0AE) : const Color(0xFF4B5563);
 
   // Alphas
   Color get whiteAlpha10 => const Color(0x1AFFFFFF);
@@ -162,10 +162,9 @@ extension PureThemeExtensionExtras on PureThemeExtension {
 
   // Structural Dividers, Shadows & Tracks
   Color get shadow => const Color(0x40000000);
-  Color get track =>
-      isDark ? const Color(0x33526B5D) : const Color(0x1F000000);
+  Color get track => isDark ? const Color(0x33505060) : const Color(0x1F000000);
   Color get divider =>
-      isDark ? const Color(0xFF232D27) : const Color(0x1A284B38);
+      isDark ? const Color(0xFF242428) : const Color(0x1A284B38);
 }
 
 /// Extension on [ThemeData] to access [PureThemeExtension] via `theme.pure`.

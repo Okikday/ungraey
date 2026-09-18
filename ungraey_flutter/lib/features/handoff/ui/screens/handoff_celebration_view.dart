@@ -4,6 +4,7 @@ import 'package:ungraey_client/ungraey_client.dart';
 import '../../../../shared/components/scale_click_wrapper.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../../main/providers/main_pod.dart';
+import '../../../main/providers/main_state.dart';
 
 /// Full-screen celebration view shown upon verified commodity handoff.
 class HandoffCelebrationView extends ConsumerWidget {
@@ -83,7 +84,10 @@ class HandoffCelebrationView extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _StatColumn(label: 'Landfill Diverted', value: '$kg kg'),
+                        _StatColumn(
+                          label: 'Landfill Diverted',
+                          value: '$kg kg',
+                        ),
                         _StatColumn(label: 'CO2e Avoided', value: '$co2 kg'),
                         _StatColumn(label: 'Trees Equivalent', value: '1.0 🌳'),
                       ],
@@ -98,7 +102,7 @@ class HandoffCelebrationView extends ConsumerWidget {
               ScaleClickWrapper(
                 onPressed: () {
                   Navigator.pop(context);
-                  ref.read(MainPod.me.notifier).switchTab(2); // Jump to Impact Tab
+                  ref.read(MainPod.me.notifier).selectTab(MainTabEntry.home);
                 },
                 child: Container(
                   height: 50,

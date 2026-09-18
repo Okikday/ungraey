@@ -1,4 +1,15 @@
-# Flutter & Serverpod project
+# Ungraey — AI-Powered Waste-to-Commodity Marketplace
+
+**"Don't trash it, cash it."** Ungraey is a cross-platform mobile marketplace that treats everyday scrap materials (corrugated cardboard, clean glass jars, treated lumber, scrap textiles, electronics) as localized commodities, diverting waste from landfills by matching household supply with local creators, artisans, and small businesses.
+
+### Core Architecture & Tech Magic:
+- **Frontend (`ungraey_flutter`)**: Built with Flutter and Riverpod (Pod structure), adhering strictly to the **Aura Design System** (surface depth via `.blendColor()`, non-linear 10-stop `BackdropShadow` dissolve masks, `KCurves.snappySpring` PageView navigation, floating dock with animated highlight pill, and frosted context menus). Every UI file is strictly under 200 lines with zero inlined build helper methods.
+- **Backend (`ungraey_server`)**: Serverpod 4.0 ORM with PostgreSQL database, real-time message streams (`nearby_bounties`, `nearby_snaps`), cryptographic single-use QR handoff tokens, and dual-party eco-impact accounting.
+- **Client (`ungraey_client`)**: Auto-generated strongly typed communication layer connecting Flutter to Serverpod endpoints.
+
+---
+
+# Flutter & Serverpod Workflow
 
 This project is a Flutter app (frontend) backed by a Serverpod server (backend). Always build the app's backend with Serverpod.
 Build for multiple users, use Serverpod's built-in authentication, which is already set up in `lib/server.dart`.
@@ -46,5 +57,3 @@ If the user asks you to test the app:
 3. Use `flutter_driver` (`dart` MCP) to navigate through the app
 
 The app is launched from `ungraey_flutter/lib/driver.dart`, which starts the Flutter driver extension with text entry emulation turned off so the app stays usable by hand. To let the driver type, set `enableTextEntryEmulation: true` there and `hot_restart` the app.
-
-IMPORTANT: After building the first version of the app, update this AGENTS.md file with information about the app we're building. KEEP the info about the MCP server and the checklist. Remove this paragraph.

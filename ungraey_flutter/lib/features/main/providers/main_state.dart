@@ -1,17 +1,34 @@
 import 'package:equatable/equatable.dart';
 
-/// State of root navigation shell.
+/// The four core tabs available in the Ungraey navigation dock.
+enum MainTabEntry {
+  home,
+  bounties,
+  snap,
+  profile;
+
+  String normalize() => switch (this) {
+    home => 'Home',
+    bounties => 'Bounties',
+    snap => 'Snap AI',
+    profile => 'Profile',
+  };
+}
+
+/// State of the root navigation shell.
 class MainState extends Equatable {
-  final int selectedIndex;
+  final MainTabEntry activeTab;
 
-  const MainState({this.selectedIndex = 0});
+  const MainState({this.activeTab = MainTabEntry.home});
 
-  MainState copyWith({int? selectedIndex}) {
+  int get selectedIndex => activeTab.index;
+
+  MainState copyWith({MainTabEntry? activeTab}) {
     return MainState(
-      selectedIndex: selectedIndex ?? this.selectedIndex,
+      activeTab: activeTab ?? this.activeTab,
     );
   }
 
   @override
-  List<Object?> get props => [selectedIndex];
+  List<Object?> get props => [activeTab];
 }

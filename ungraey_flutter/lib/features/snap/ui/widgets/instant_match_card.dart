@@ -4,6 +4,7 @@ import '../../../../shared/components/scale_click_wrapper.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../providers/snap_pod.dart';
 import '../actions/snap_actions.dart';
+import 'ai_match_score_ring.dart';
 
 /// Floating card presenting instant localized matching and potential cash earnings.
 class InstantMatchCard extends ConsumerWidget {
@@ -17,8 +18,15 @@ class InstantMatchCard extends ConsumerWidget {
     if (state.matchingBounties.isEmpty) return const SizedBox.shrink();
 
     final count = state.matchingBounties.length;
-    final earningsDollars = (state.totalPotentialEarningsCents / 100).toStringAsFixed(2);
+    final earningsDollars = (state.totalPotentialEarningsCents / 100)
+        .toStringAsFixed(2);
     final topBounty = state.matchingBounties.first;
+    final avgConfidence = state.detectedRegions.isEmpty
+        ? 0.91
+        : state.detectedRegions
+                  .map((r) => r.confidence)
+                  .reduce((a, b) => a + b) /
+              state.detectedRegions.length;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -44,15 +52,8 @@ class InstantMatchCard extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: pure.primary.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(Icons.flash_on_rounded, color: pure.primary, size: 20),
-              ),
-              const SizedBox(width: 10),
+              AiMatchScoreRing(score: avgConfidence, size: 68),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +79,10 @@ class InstantMatchCard extends ConsumerWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: pure.secondary.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(12),
@@ -114,7 +118,8 @@ class InstantMatchCard extends ConsumerWidget {
             children: [
               Expanded(
                 child: ScaleClickWrapper(
-                  onPressed: () => SnapActions.openMatchDetails(context, topBounty.id ?? 1),
+                  onPressed: () =>
+                      SnapActions.openMatchDetails(context, topBounty.id ?? 1),
                   child: Container(
                     height: 40,
                     decoration: BoxDecoration(

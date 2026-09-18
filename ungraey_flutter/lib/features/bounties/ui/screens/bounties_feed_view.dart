@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../shared/components/floating_pill.dart';
+import '../../../../shared/components/app_text.dart';
 import '../../../../shared/components/gradient_footer.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../providers/bounties_pod.dart';
 import '../actions/bounties_actions.dart';
-import '../widgets/bounty_card.dart';
+import '../widgets/bounties_header.dart';
+import '../widgets/bounty_search_bar.dart';
+import '../widgets/bounty_tile.dart';
 import '../widgets/category_filter_pills.dart';
+import '../widgets/pinned_bounties_section.dart';
 
-/// Screen presenting local upcycle bounties, category filters, and search.
+/// Screen presenting the commodity bounties marketplace with slivers layout.
 class BountiesFeedView extends ConsumerWidget {
   const BountiesFeedView({super.key});
 
@@ -20,81 +23,86 @@ class BountiesFeedView extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: pure.scaffoldBackground,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            // Top Bar with Search & Filter
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: FloatingSearchFilterPill(
-                      placeholder: 'Search 5-mile bounties...',
-                      isFilterActive: state.selectedCategory != null,
-                      onSearchTap: () {},
-                      onFilterTap: () => BountiesActions.openRadiusFilter(context, ref),
-                    ),
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          // ── Pinned Header with Proximity Action ──
+          const SliverToBoxAdapter(child: BountiesHeader()),
+          const SliverToBoxAdapter(child: SizedBox(height: 8)),
+
+          // ── High Urgency Pinned Bounties Carousel ──
+          const SliverToBoxAdapter(child: PinnedBountiesSection()),
+          const SliverToBoxAdapter(child: SizedBox(height: 14)),
+
+          // ── Inset Search Bar ──
+          const SliverToBoxAdapter(child: BountySearchBar()),
+          const SliverToBoxAdapter(child: SizedBox(height: 10)),
+
+          // ── Category Filter Pills ──
+          SliverToBoxAdapter(
+            child: CategoryFilterPills(
+              selectedCategory: state.selectedCategory,
+              onSelect: (cat) =>
+                  ref.read(BountiesPod.me.notifier).selectCategory(cat),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 12)),
+
+          // ── Feed List ──
+          if (state.isLoading)
+            SliverToBoxAdapter(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(40),
+                  child: CircularProgressIndicator(color: pure.primary),
+                ),
+              ),
+            )
+          else if (bounties.isEmpty)
+            SliverToBoxAdapter(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(40),
+                  child: AppText(
+                    'No active bounties in this category yet.\nTap the + action to publish one!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: pure.textMuted, fontSize: 13),
                   ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                    onPressed: () => BountiesActions.openCreateBounty(context, ref),
-                    icon: const Icon(Icons.add_circle_outline_rounded),
-                    style: IconButton.styleFrom(
-                      backgroundColor: pure.primary.withValues(alpha: 0.15),
-                      foregroundColor: pure.primary,
+                ),
+              ),
+            )
+          else
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final bounty = bounties[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: BountyTile(
+                      bounty: bounty,
+                      onTap: () => BountiesActions.openBountyDetails(
+                        context,
+                        bounty.id ?? 1,
+                      ),
                     ),
-                  ),
-                ],
+                  );
+                },
+                childCount: bounties.length,
               ),
             ),
 
-            // Horizontal Category Selector
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: CategoryFilterPills(
-                selectedCategory: state.selectedCategory,
-                onSelect: (cat) =>
-                    ref.read(BountiesPod.me.notifier).selectCategory(cat),
-              ),
-            ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
-            // Bounties List
-            Expanded(
-              child: state.isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(color: pure.primary),
-                    )
-                  : bounties.isEmpty
-                      ? Center(
-                          child: Text(
-                            'No active bounties in this category yet.\nTap + to post one!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: pure.textMuted, fontSize: 13),
-                          ),
-                        )
-                      : ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          padding: const EdgeInsets.only(bottom: 90),
-                          itemCount: bounties.length + 1,
-                          itemBuilder: (context, index) {
-                            if (index == bounties.length) {
-                              return const GradientFooter(label: 'All Nearby Bounties Loaded');
-                            }
-                            final b = bounties[index];
-                            return BountyCard(
-                              bounty: b,
-                              onTap: () => BountiesActions.openBountyDetails(
-                                context,
-                                b.id ?? 1,
-                              ),
-                            );
-                          },
-                        ),
+          // ── Footer ──
+          const SliverToBoxAdapter(
+            child: GradientFooter(
+              label: 'All Active Bounties in 5-Mile Radius',
             ),
-          ],
-        ),
+          ),
+
+          // Clearance for Floating Navigation Dock
+          const SliverToBoxAdapter(child: SizedBox(height: 120)),
+        ],
       ),
     );
   }

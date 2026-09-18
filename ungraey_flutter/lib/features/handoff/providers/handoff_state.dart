@@ -35,10 +35,10 @@ class HandoffState extends Equatable {
 
   @override
   List<Object?> get props => [
-        activeTransaction,
-        isGenerating,
-        isVerifying,
-        isCompleted,
-        secondsRemaining,
-      ];
+    activeTransaction,
+    isGenerating,
+    isVerifying,
+    isCompleted,
+    secondsRemaining,
+  ];
 }
