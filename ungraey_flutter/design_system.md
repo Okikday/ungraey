@@ -338,7 +338,7 @@ Real-time bid and supply pings drop down from the top status bar:
    - Border: `1.0px` hairline with `onSurface.withValues(alpha: 0.12)`.
    - Background: `theme.colorScheme.surface` with subtle elevation shadow (`BoxShadow(color: Colors.black12, blurRadius: 16, offset: Offset(0, 4))`).
 3. **Animated Highlight Indicator**:
-   - Uses `AnimatedPositioned` with `curve: KCurves.bouncySpring` and `duration: Duration(milliseconds: 600)`.
+    - Uses `AnimatedPositioned` with `curve: KCurves.bouncySpring` and `duration: Duration(milliseconds: 300)`.
    - Sliding rounded pill (`width: 68`, `height: 56`, `borderRadius: 40`) filled with `onSurface.withValues(alpha: 0.15)`.
    - Tracks active tab changes smoothly without double-rebuild stutter.
 
@@ -356,7 +356,7 @@ Real-time bid and supply pings drop down from the top status bar:
      - `BackdropFilter(filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20))`.
      - Background: `pure.card.withValues(alpha: 0.5)`.
      - Border: `pure.border.withValues(alpha: 0.7)`.
-     - Animation: `.scaleXY(alignment: Alignment.bottomRight, curve: KCurves.bouncySpring, duration: 700ms).fadeIn()`.
+      - Animation: `.scaleXY(alignment: Alignment.bottomRight, curve: KCurves.bouncySpring, duration: 350ms).fadeIn()`.
    - Action item rows include rounded circular icon badges (`36x36`), title, subtitle, and `ScaleClickWrapper` with `HapticFeedback.selectionClick()`.
 
 ---

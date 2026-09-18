@@ -103,9 +103,9 @@ class FloatingContextMenu extends StatelessWidget {
                   .scaleXY(
                     alignment: Alignment.bottomRight,
                     curve: KCurves.bouncySpring,
-                    duration: const Duration(milliseconds: 650),
+                    duration: const Duration(milliseconds: 350),
                   )
-                  .fadeIn(duration: const Duration(milliseconds: 250)),
+                  .fadeIn(duration: const Duration(milliseconds: 150)),
         ),
       ],
     );

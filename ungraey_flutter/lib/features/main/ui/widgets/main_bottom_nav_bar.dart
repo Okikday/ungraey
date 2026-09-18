@@ -110,7 +110,7 @@ class _HighlightIndicator extends StatelessWidget {
     final pure = context.pureTheme;
 
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 300),
       curve: KCurves.bouncySpring,
       left: tabIndex * 66.0,
       child: IgnorePointer(
