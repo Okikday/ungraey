@@ -52,7 +52,7 @@ class TesterSignInView extends StatelessWidget {
                 child: AppText(
                   'Bypass Login (Hackathon Demo)',
                   style: TextStyle(
-                    color: pure.accentPrimary,
+                    color: pure.primary,
                     decoration: TextDecoration.underline,
                   ),
                 ),
