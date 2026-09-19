@@ -6,11 +6,15 @@ import '../../../../core/enums/material_category.dart';
 import '../../../../shared/components/scale_click_wrapper.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../providers/bounties_pod.dart';
+import '../widgets/bounty_category_field.dart';
 import '../widgets/bounty_sliders_row.dart';
+import '../../models/bounty_draft.dart';
 
 /// Modal bottom sheet allowing buyers and artisans to post commodity bounties.
 class CreateBountyModal extends ConsumerStatefulWidget {
-  const CreateBountyModal({super.key});
+  final BountyDraft? draft;
+
+  const CreateBountyModal({super.key, this.draft});
 
   @override
   ConsumerState<CreateBountyModal> createState() => _CreateBountyModalState();
@@ -26,6 +30,17 @@ class _CreateBountyModalState extends ConsumerState<CreateBountyModal> {
   final _tradeController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final draft = widget.draft;
+    if (draft != null) {
+      _category = draft.category;
+      _rewardDollars = draft.rewardDollars.clamp(1, 100);
+      _titleController.text = draft.titleHint;
+    }
+  }
+
+  @override
   void dispose() {
     _titleController.dispose();
     _descController.dispose();
@@ -39,7 +54,7 @@ class _CreateBountyModalState extends ConsumerState<CreateBountyModal> {
 
     final bounty = Bounty(
       creatorId: 1,
-      creatorName: 'Local Maker',
+      creatorName: widget.draft == null ? 'Local Maker' : 'You',
       title: title,
       description: _descController.text.trim(),
       category: _category,
@@ -115,27 +130,9 @@ class _CreateBountyModalState extends ConsumerState<CreateBountyModal> {
           const SizedBox(height: 14),
 
           // Category Dropdown
-          DropdownButtonFormField<MaterialCategory>(
-            initialValue: _category,
-            decoration: InputDecoration(
-              labelText: 'Material Category',
-              labelStyle: TextStyle(color: pure.textMuted, fontSize: 13),
-              filled: true,
-              fillColor: pure.surfaceHighlight,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide.none,
-              ),
-            ),
-            dropdownColor: pure.surface,
-            items: [
-              for (final cat in MaterialCategory.values)
-                DropdownMenuItem(
-                  value: cat,
-                  child: Text('${cat.emoji} ${cat.displayName}'),
-                ),
-            ],
-            onChanged: (v) => setState(() => _category = v ?? _category),
+          BountyCategoryField(
+            category: _category,
+            onChanged: (v) => setState(() => _category = v),
           ),
           const SizedBox(height: 14),
 

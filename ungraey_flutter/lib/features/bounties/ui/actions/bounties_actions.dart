@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../models/bounty_draft.dart';
 import '../../providers/bounties_pod.dart';
 import '../screens/bounty_detail_view.dart';
 import '../screens/create_bounty_view.dart';
@@ -8,13 +9,18 @@ import '../screens/create_bounty_view.dart';
 class BountiesActions {
   const BountiesActions._();
 
-  /// Opens the modal sheet to create a new commodity bounty.
-  static void openCreateBounty(BuildContext context, WidgetRef ref) {
+  /// Opens the modal sheet to create a new commodity bounty,
+  /// optionally prefilled from a snapped pile via [draft].
+  static void openCreateBounty(
+    BuildContext context,
+    WidgetRef ref, {
+    BountyDraft? draft,
+  }) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => const CreateBountyModal(),
+      builder: (_) => CreateBountyModal(draft: draft),
     );
   }
 
