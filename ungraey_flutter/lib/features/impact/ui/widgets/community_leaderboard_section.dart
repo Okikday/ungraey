@@ -25,14 +25,14 @@ class CommunityLeaderboardSection extends ConsumerWidget {
       (
         'Priya S.',
         '🪴',
-        (userKg - 9.8).clamp(0.5, 9999),
+        (userKg - 9.8).clamp(0.5, 9999).toDouble(),
         userHandoffs,
         false,
       ),
       (
         'Sam K.',
         '📚',
-        (userKg - 21.4).clamp(0.5, 9999),
+        (userKg - 21.4).clamp(0.5, 9999).toDouble(),
         userHandoffs - 1,
         false,
       ),

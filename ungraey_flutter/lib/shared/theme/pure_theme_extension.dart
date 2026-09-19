@@ -6,7 +6,8 @@ import 'pure_light_theme_extension.dart';
 extension ColorBlendExtension on Color {
   /// Blends this base color with [overlay] at alpha factor [factor] (0.0 to 1.0).
   Color blendColor(Color overlay, double factor) {
-    return Color.lerp(this, overlay, factor.clamp(0.0, 1.0)) ?? this;
+    return Color.lerp(this, overlay, factor.clamp(0.0, 1.0).toDouble()) ??
+        this;
   }
 }
 

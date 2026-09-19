@@ -60,7 +60,7 @@ class MaterialClassifier {
         DetectedRegion(
           normalizedRect: sample.$2,
           category: sample.$1,
-          confidence: (sample.$3).clamp(0.0, 1.0),
+          confidence: (sample.$3).clamp(0.0, 1.0).toDouble(),
         ),
       );
     }
