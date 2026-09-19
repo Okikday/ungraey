@@ -1,5 +1,25 @@
 # Ungraey — Don't Trash It, Cash It.
 
+## How to Run (Hackathon Judges)
+
+### 1. Start the Backend Server
+This project requires the Serverpod backend to be running locally.
+1. Open a terminal and navigate to the `ungraey_server` directory.
+2. Run `serverpod start`
+3. Wait for the server to say "Server running" and "Applied database migration".
+
+### 2. Run the App
+1. Open a new terminal and navigate to the `ungraey_flutter` directory.
+2. Run `flutter run -d macos` (or `flutter run` to select your preferred device).
+3. The app connects to `localhost:8080` by default.
+
+### 3. Tester Account
+Use the following credentials to sign in and test the app:
+- **Email**: `tester@ungraey.com`
+- **Password**: `tester123`
+*(Note: There is also a "Bypass Login" button on the sign-in screen to instantly skip into the app!)*
+
+---
 ## Inspiration
 
 Every week, millions of people throw away perfectly useful materials such as moving boxes, glass jars, scrap wood, leftover denim, old copper wire e.t.c., not because they want to, but because the trash can is the only zero-friction option. At the same time, a ceramics artist two streets away is driving to a big-box store to buy the exact glass jars that just hit the dumpster.
