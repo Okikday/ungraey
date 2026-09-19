@@ -65,7 +65,7 @@ jobs:
       - name: Enforce UI file size (<200 lines per rules.md)
         run: |
           echo "### UI files over 200 lines (features/*/ui, shared/components):" >> "$GITHUB_STEP_SUMMARY"
-          VIOLATIONS=$( { find ungraey_flutter/lib/features -name '*.dart' -path '*/ui/*' -exec wc -l {} +; find ungraey_flutter/lib/shared/components -name '*.dart' -exec wc -l {} +; } | awk '$1 > 200 {print $2" ("$1" lines)"}')
+          VIOLATIONS=$( { find ungraey_flutter/lib/features -name '*.dart' -path '*/ui/*' -exec wc -l {} +; find ungraey_flutter/lib/shared/components -name '*.dart' -exec wc -l {} +; } | awk '$2 != "total" && $1 > 200 {print $2" ("$1" lines)"}')
           if [ -n "$VIOLATIONS" ]; then
             echo "$VIOLATIONS"
             echo "$VIOLATIONS" >> "$GITHUB_STEP_SUMMARY"

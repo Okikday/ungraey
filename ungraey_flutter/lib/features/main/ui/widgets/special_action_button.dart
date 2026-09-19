@@ -65,18 +65,9 @@ class _SpecialActionButtonState extends ConsumerState<SpecialActionButton> {
     );
   }
 
-  IconData _getIconForTab(MainTabEntry tab) => switch (tab) {
-    MainTabEntry.home => Iconsax.add_copy,
-    MainTabEntry.bounties => Iconsax.element_plus_copy,
-    MainTabEntry.snap => Iconsax.scan_copy,
-    MainTabEntry.profile => Iconsax.setting_2_copy,
-  };
-
   @override
   Widget build(BuildContext context) {
     final pure = context.pureTheme;
-    final activeTab = ref.watch(MainPod.me.select((s) => s.activeTab));
-    final iconData = _getIconForTab(activeTab);
 
     return SizedBox(
       width: 48,
@@ -88,20 +79,10 @@ class _SpecialActionButtonState extends ConsumerState<SpecialActionButton> {
         foregroundColor: Colors.black,
         elevation: 6,
         shape: const CircleBorder(),
-        onPressed: () => _handlePress(activeTab),
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 220),
-          transitionBuilder: (child, anim) {
-            return RotationTransition(
-              turns: Tween<double>(begin: 0.85, end: 1.0).animate(anim),
-              child: FadeTransition(opacity: anim, child: child),
-            );
-          },
-          child: Icon(
-            iconData,
-            key: ValueKey(iconData),
-            size: 22,
-          ),
+        onPressed: () => _handlePress(ref.read(MainPod.me).activeTab),
+        child: const Icon(
+          Iconsax.add_copy,
+          size: 22,
         ),
       ),
     );
