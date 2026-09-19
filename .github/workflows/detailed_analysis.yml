@@ -58,6 +58,10 @@ jobs:
         working-directory: ungraey_client
         run: dart format --set-exit-if-changed .
 
+      - name: Run flutter tests
+        working-directory: ungraey_flutter
+        run: flutter test
+
       - name: Enforce UI file size (<200 lines per rules.md)
         run: |
           echo "### UI files over 200 lines (features/*/ui, shared/components):" >> "$GITHUB_STEP_SUMMARY"
@@ -92,4 +96,5 @@ jobs:
           echo "### Detailed analysis finished" >> "$GITHUB_STEP_SUMMARY"
           echo "- dart analyze (flutter, server, client) with --fatal-infos" >> "$GITHUB_STEP_SUMMARY"
           echo "- dart format check (flutter, server, client)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- flutter test suite" >> "$GITHUB_STEP_SUMMARY"
           echo "- UI file size + build-helper guardrails per rules.md" >> "$GITHUB_STEP_SUMMARY"
