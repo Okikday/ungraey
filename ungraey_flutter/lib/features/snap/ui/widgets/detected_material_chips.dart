@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/enums/material_category.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../logic/material_classifier.dart';
+import '../../logic/material_price_guide.dart';
 
 /// Renders horizontal scrolling pills for detected material tags.
 class DetectedMaterialChips extends StatelessWidget {
@@ -37,6 +38,7 @@ class _MaterialChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final pure = context.pureTheme;
     final cat = region.category;
+    final estimate = MaterialPriceGuide.estimateFor(cat);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
@@ -69,7 +71,7 @@ class _MaterialChip extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              '${region.estimatedKg}kg • ${(region.confidence * 100).toInt()}%',
+              '${MaterialPriceGuide.formatDollars(estimate.typicalCents)} • ${(region.confidence * 100).toInt()}%',
               style: TextStyle(
                 color: pure.primary,
                 fontSize: 10.5,

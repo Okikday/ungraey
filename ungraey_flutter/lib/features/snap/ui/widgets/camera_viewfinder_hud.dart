@@ -23,7 +23,7 @@ class _CameraViewfinderHudState extends ConsumerState<CameraViewfinderHud>
     super.initState();
     _laserController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2200),
+      duration: const Duration(milliseconds: 1400),
     )..repeat(reverse: true);
   }
 

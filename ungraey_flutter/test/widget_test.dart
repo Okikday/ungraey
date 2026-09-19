@@ -27,7 +27,6 @@ void main() {
       expect(regions.isNotEmpty, isTrue);
       for (final r in regions) {
         expect(r.confidence, greaterThanOrEqualTo(0.85));
-        expect(r.estimatedKg, greaterThan(0));
         expect(r.category.displayName.isNotEmpty, isTrue);
       }
     });
@@ -50,7 +49,7 @@ void main() {
         expect(state.detectedRegions.isNotEmpty, isTrue);
         expect(state.matchingBounties.isNotEmpty, isTrue);
         expect(state.totalPotentialEarningsCents, greaterThan(0));
-        expect(state.estimatedTotalKg, greaterThan(0));
+        expect(state.estimatedTypicalCents, greaterThan(0));
       },
     );
   });

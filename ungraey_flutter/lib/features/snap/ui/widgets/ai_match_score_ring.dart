@@ -29,7 +29,7 @@ class _AiMatchScoreRingState extends State<AiMatchScoreRing>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 700),
     );
     _arcAnimation = CurvedAnimation(
       parent: _controller,
@@ -104,7 +104,7 @@ class _AiMatchScoreRingState extends State<AiMatchScoreRing>
           ),
         );
       },
-    ).animate().fadeIn(duration: 300.ms);
+    ).animate().fadeIn(duration: 150.ms);
   }
 }
 

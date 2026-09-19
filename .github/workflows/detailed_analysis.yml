@@ -1,0 +1,100 @@
+name: Detailed Analysis
+
+# Runs on every push (any branch) and pull request so regressions are
+# visible in the Actions tab without building an APK.
+on:
+  push:
+  pull_request:
+
+jobs:
+  detailed-analysis:
+    name: Detailed project analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.4'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies (flutter app)
+        working-directory: ungraey_flutter
+        run: flutter pub get
+
+      - name: Install dependencies (server)
+        working-directory: ungraey_server
+        run: dart pub get
+
+      - name: Install dependencies (client)
+        working-directory: ungraey_client
+        run: dart pub get
+
+      - name: Analyze flutter app
+        working-directory: ungraey_flutter
+        run: dart analyze --fatal-infos
+
+      - name: Analyze server
+        working-directory: ungraey_server
+        run: dart analyze --fatal-infos
+
+      - name: Analyze client
+        working-directory: ungraey_client
+        run: dart analyze --fatal-infos
+
+      - name: Check formatting (flutter app)
+        working-directory: ungraey_flutter
+        run: dart format --set-exit-if-changed .
+
+      - name: Check formatting (server)
+        working-directory: ungraey_server
+        run: dart format --set-exit-if-changed .
+
+      - name: Check formatting (client)
+        working-directory: ungraey_client
+        run: dart format --set-exit-if-changed .
+
+      - name: Run flutter tests
+        working-directory: ungraey_flutter
+        run: flutter test
+
+      - name: Enforce UI file size (<200 lines per rules.md)
+        run: |
+          echo "### UI files over 200 lines (features/*/ui, shared/components):" >> "$GITHUB_STEP_SUMMARY"
+          VIOLATIONS=$( { find ungraey_flutter/lib/features -name '*.dart' -path '*/ui/*' -exec wc -l {} +; find ungraey_flutter/lib/shared/components -name '*.dart' -exec wc -l {} +; } | awk '$1 > 200 {print $2" ("$1" lines)"}')
+          if [ -n "$VIOLATIONS" ]; then
+            echo "$VIOLATIONS"
+            echo "$VIOLATIONS" >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::UI files exceed 200 lines (see rules.md §2.1)"
+            exit 1
+          else
+            echo "None — all UI files under 200 lines."
+            echo "None — all UI files under 200 lines." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Forbid inlined build helpers (rules.md §2.1)
+        run: |
+          echo "### Inlined Widget _build helpers:" >> "$GITHUB_STEP_SUMMARY"
+          HELPERS=$(grep -rn --include='*.dart' -E 'Widget _build[A-Z]' ungraey_flutter/lib || true)
+          if [ -n "$HELPERS" ]; then
+            echo "$HELPERS"
+            echo "$HELPERS" >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::Inlined Widget _build helpers found (see rules.md §2.1)"
+            exit 1
+          else
+            echo "None found."
+            echo "None found." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Analysis summary
+        if: always()
+        run: |
+          echo "### Detailed analysis finished" >> "$GITHUB_STEP_SUMMARY"
+          echo "- dart analyze (flutter, server, client) with --fatal-infos" >> "$GITHUB_STEP_SUMMARY"
+          echo "- dart format check (flutter, server, client)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- flutter test suite" >> "$GITHUB_STEP_SUMMARY"
+          echo "- UI file size + build-helper guardrails per rules.md" >> "$GITHUB_STEP_SUMMARY"
