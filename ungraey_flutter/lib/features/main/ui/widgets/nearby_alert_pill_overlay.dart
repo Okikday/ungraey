@@ -19,7 +19,7 @@ class NearbyAlertPillOverlay extends ConsumerWidget {
 
     return AnimatedSlide(
       offset: state.visible ? Offset.zero : const Offset(0, -1.6),
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 560),
       curve: state.visible ? KCurves.bouncySpring : Curves.easeInQuart,
       child: alert == null
           ? const SizedBox.shrink()

@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../network/api.dart';
 import '../logic/material_classifier.dart';
-import '../logic/material_price_guide.dart';
 import 'snap_state.dart';
 
 final _snapProvider = NotifierProvider.autoDispose<SnapPod, SnapState>(
@@ -37,10 +36,10 @@ class SnapPod extends AutoDisposeNotifier<SnapState> {
 
     final regions = await classifier.classifyImage(imagePath: imagePath);
 
-    // Market value comes from the price guide, never from camera weighing.
-    final price = MaterialPriceGuide.sumFor(
-      regions.map((r) => r.category),
-    );
+    double totalKg = 0;
+    for (final r in regions) {
+      totalKg += r.estimatedKg;
+    }
 
     final allBounties = await Api.instance.listBounties();
     final matching = allBounties.where((b) {
@@ -61,9 +60,7 @@ class SnapPod extends AutoDisposeNotifier<SnapState> {
       matchingBounties: matching.isNotEmpty
           ? matching
           : allBounties.take(2).toList(),
-      estimatedLowCents: price.lowCents,
-      estimatedTypicalCents: price.typicalCents,
-      estimatedHighCents: price.highCents,
+      estimatedTotalKg: totalKg > 0 ? totalKg : 14.5,
       totalPotentialEarningsCents: totalEarnable,
     );
   }

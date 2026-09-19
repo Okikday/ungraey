@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../shared/components/scale_click_wrapper.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
-import '../../logic/material_price_guide.dart';
 import '../../providers/snap_pod.dart';
 import '../actions/snap_actions.dart';
 import 'ai_match_score_ring.dart';
@@ -109,17 +108,6 @@ class InstantMatchCard extends ConsumerWidget {
             style: TextStyle(
               color: pure.textSecondary,
               fontSize: 12.5,
-              height: 1.3,
-            ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Market estimate ${MaterialPriceGuide.formatDollars(state.estimatedLowCents)}–${MaterialPriceGuide.formatDollars(state.estimatedHighCents)} • final price agreed at handoff',
-            style: TextStyle(
-              color: pure.textMuted,
-              fontSize: 11.5,
               height: 1.3,
             ),
             maxLines: 2,

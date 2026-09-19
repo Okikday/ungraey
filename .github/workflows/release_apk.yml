@@ -1,8 +1,11 @@
 name: Build & Release APK
 
-# Auto-run disabled: APKs only build on manual dispatch, never on push.
-# Use the Detailed Analysis workflow to monitor every push instead.
 on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       tag_name:

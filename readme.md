@@ -19,22 +19,9 @@ Ungraey is a cross-platform mobile marketplace that treats everyday household wa
 > *"Need 50 clean glass jars. $0.10 each or trade a handmade mug."*
 > *"Infinite intact cardboard boxes ongoing. $0.05/box."*
 
-**The Snap (Supply):** A user declutters their space, snaps a photo in the app, and our on-device AI classifier instantly identifies the material, estimates what the lot could earn from a local market price guide, and surfaces the nearest active Bounties that match. Entire flow: under 10 seconds. No camera-weighed gimmicks — vision identifies, the price guide values, and buyer and seller agree the final price at handoff.
+**The Snap (Supply):** A user declutters their space, snaps a photo in the app, and our on-device AI classifier instantly identifies the material, grades its condition, and surfaces the nearest active Bounties that match with live pricing and eco-impact data. Entire flow: under 10 seconds.
 
 **The Handoff (Settlement):** Once a match is accepted, Ungraey generates a cryptographic single-use QR token shared between both parties. The buyer scans it on pickup to confirm the exchange, triggering real-time eco-impact accounting for both sides: CO₂ diverted, landfill weight saved, and a running community leaderboard.
-
----
-
-## Try the Demo (60 Seconds)
-
-No login, no backend, no setup. The app ships with realistic seeded data and works fully offline:
-
-1. **Home** — see live bounties, the Eco-Dial, community totals, and the neighborhood leaderboard.
-2. **Snap (camera tab)** — tap the shutter. AI identifies the material, shows an estimated market value (e.g. $5–$8), and surfaces matching local buyers.
-3. **Bounties** — open a bounty, tap "Generate Handoff QR Code" to create the cryptographic single-use token.
-4. **Profile** — check the wallet, diversion stats, and leaderboard position.
-
-Grab the latest APK from [GitHub Releases](../../releases) (`ungraey-arm64-v8a-release.apk` fits most modern phones) or run `flutter run` from `ungraey_flutter/` with the Serverpod backend via `serverpod start`.
 
 ---
 
