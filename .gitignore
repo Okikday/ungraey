@@ -29,3 +29,5 @@ config/firebase_service_account_key.json
 credentials.json
 service_account*.json
 
+# Personal planning notes
+/okiki
