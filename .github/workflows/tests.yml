@@ -36,7 +36,7 @@ jobs:
 
       - name: Run Serverpod generator
         working-directory: ungraey_server
-        run: serverpod generate
+        run: dart pub global run serverpod_cli generate
 
       - name: Run tests
         working-directory: ungraey_server

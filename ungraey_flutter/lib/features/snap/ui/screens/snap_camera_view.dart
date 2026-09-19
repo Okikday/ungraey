@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/enums/material_category.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
+import '../../logic/material_price_guide.dart';
 import '../../providers/snap_pod.dart';
 import '../actions/snap_actions.dart';
+import '../widgets/camera_feed_widget.dart';
 import '../widgets/camera_viewfinder_hud.dart';
 import '../widgets/detected_material_chips.dart';
 import '../widgets/instant_match_card.dart';
@@ -24,51 +26,67 @@ class SnapCameraView extends ConsumerWidget {
         children: [
           // Background simulation canvas / camera viewport
           Positioned.fill(
-            child: Container(
-              color: const Color(0xFF131815),
-              child: state.hasCaptured
-                  ? Center(
-                      child: Container(
-                        margin: const EdgeInsets.all(24),
-                        padding: const EdgeInsets.all(32),
-                        decoration: BoxDecoration(
-                          color: pure.surface,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: pure.primary.withValues(alpha: 0.3),
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              state.detectedRegions.isNotEmpty
-                                  ? state.detectedRegions.first.category.emoji
-                                  : '📦',
-                              style: const TextStyle(fontSize: 64),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Waste Pile Analyzed',
-                              style: TextStyle(
-                                color: pure.textPrimary,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Estimated weight: ${state.estimatedTotalKg} kg',
-                              style: TextStyle(
-                                color: pure.textMuted,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
+            child: Stack(
+              children: [
+                const Positioned.fill(
+                  child: CameraFeedWidget(),
+                ),
+                if (state.hasCaptured)
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.all(32),
+                      decoration: BoxDecoration(
+                        color: pure.surface,
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: pure.primary.withValues(alpha: 0.3),
                         ),
                       ),
-                    )
-                  : const CameraViewfinderHud(),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            state.detectedRegions.isNotEmpty
+                                ? state.detectedRegions.first.category.emoji
+                                : '📦',
+                            style: const TextStyle(fontSize: 64),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Waste Pile Analyzed',
+                            style: TextStyle(
+                              color: pure.textPrimary,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Est. value ${MaterialPriceGuide.formatDollars(state.estimatedLowCents)}–${MaterialPriceGuide.formatDollars(state.estimatedHighCents)}',
+                            style: TextStyle(
+                              color: pure.secondary,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Market estimate • final price agreed at handoff',
+                            style: TextStyle(
+                              color: pure.textMuted,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  const Positioned.fill(
+                    child: CameraViewfinderHud(),
+                  ),
+              ],
             ),
           ),
 

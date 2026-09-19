@@ -77,17 +77,17 @@ class MatchCardActions extends ConsumerWidget {
             height: 40,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: pure.secondary.withValues(alpha: 0.14),
+              color: pure.surfaceHighlight,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: pure.secondary.withValues(alpha: 0.45),
+                color: pure.borderSubtle.withValues(alpha: 0.3),
               ),
             ),
             alignment: Alignment.center,
             child: Text(
               'List this pile for sale',
               style: TextStyle(
-                color: pure.secondary,
+                color: pure.textPrimary,
                 fontWeight: FontWeight.w700,
                 fontSize: 13,
               ),

@@ -1,4 +1,6 @@
+import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../client.dart';
 import '../../../network/api.dart';
 import '../logic/material_classifier.dart';
 import 'snap_state.dart';
@@ -34,23 +36,29 @@ class SnapPod extends AutoDisposeNotifier<SnapState> {
   Future<void> captureAndMatch({String? imagePath}) async {
     state = state.copyWith(isProcessing: true, isScanning: false);
 
-    final regions = await classifier.classifyImage(imagePath: imagePath);
+    // Call out to the Serverpod backend AI endpoint
+    final result = await client.snap.analyze('dummy_base64_image_data_here');
+    final detectedCategories = result.detectedCategories;
 
-    double totalKg = 0;
-    for (final r in regions) {
-      totalKg += r.estimatedKg;
-    }
+    // Convert to mock regions for UI display
+    final regions = detectedCategories.map((c) {
+      return DetectedRegion(
+        category: c,
+        normalizedRect: const Rect.fromLTWH(0.2, 0.2, 0.6, 0.6),
+        confidence: result.confidenceScore,
+      );
+    }).toList();
 
     final allBounties = await Api.instance.listBounties();
     final matching = allBounties.where((b) {
-      return regions.any((r) => r.category == b.category);
+      return detectedCategories.any((c) => c == b.category);
     }).toList();
 
     int totalEarnable = 0;
     for (final b in matching) {
       totalEarnable += b.rewardAmountCents;
     }
-    if (totalEarnable == 0) totalEarnable = 1250;
+    if (totalEarnable == 0) totalEarnable = result.estimatedValueCents;
 
     state = state.copyWith(
       isProcessing: false,
@@ -60,7 +68,9 @@ class SnapPod extends AutoDisposeNotifier<SnapState> {
       matchingBounties: matching.isNotEmpty
           ? matching
           : allBounties.take(2).toList(),
-      estimatedTotalKg: totalKg > 0 ? totalKg : 14.5,
+      estimatedLowCents: (result.estimatedValueCents * 0.8).round(),
+      estimatedTypicalCents: result.estimatedValueCents,
+      estimatedHighCents: (result.estimatedValueCents * 1.5).round(),
       totalPotentialEarningsCents: totalEarnable,
     );
   }

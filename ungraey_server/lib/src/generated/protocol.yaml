@@ -22,6 +22,7 @@ impact:
   - getCommunityImpact:
 snap:
   - submitSnap:
+  - analyze:
   - findMatchesForSnap:
   - streamNearbyBounties:
 greeting:

@@ -51,10 +51,10 @@ class OngoingExchangeTile extends StatelessWidget {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: pure.primary.withValues(alpha: 0.12),
+                  color: pure.surfaceHighlight,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: pure.primary.withValues(alpha: 0.35),
+                    color: pure.borderSubtle,
                     width: 1,
                   ),
                 ),

@@ -5,10 +5,11 @@ import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../providers/impact_pod.dart';
 import '../widgets/city_live_pulse_badge.dart';
 import '../widgets/community_counter_ticker.dart';
+import '../widgets/community_leaderboard_section.dart';
 import '../widgets/eco_dial_gauge.dart';
 import '../widgets/featured_bounties_section.dart';
 import '../widgets/home_header.dart';
-import '../widgets/milestone_trophy_grid.dart';
+
 import '../widgets/ongoing_exchanges_section.dart';
 
 /// Earth Forward Home Dashboard blending real-time metrics and commodity marketplace.
@@ -79,13 +80,14 @@ class ImpactDashboardView extends ConsumerWidget {
 
           const SliverToBoxAdapter(child: SizedBox(height: 22)),
 
-          // Milestone Trophies Grid
+          // Neighborhood Leaderboard
           const SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: MilestoneTrophyGrid(),
+              child: CommunityLeaderboardSection(),
             ),
           ),
+
 
           const SliverToBoxAdapter(child: SizedBox(height: 18)),
 

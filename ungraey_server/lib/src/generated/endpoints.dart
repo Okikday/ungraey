@@ -15,6 +15,7 @@ import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
     as _iacs;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _iais;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i1n3uhu0;
 import 'package:ungraey_server/src/generated/bounty.dart' as _iymn45h4;
 import 'package:ungraey_server/src/generated/material_category.dart'
     as _i8sopnk2;
@@ -494,6 +495,24 @@ class Endpoints extends _is.EndpointDispatch {
                     params['snap'],
                   ),
         ),
+        'analyze': _is.MethodConnector(
+          name: 'analyze',
+          params: {
+            'base64Image': _is.ParameterDescription(
+              name: 'base64Image',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['snap'] as _its6ddlz.SnapEndpoint).analyze(
+                session,
+                params['base64Image'],
+              ),
+        ),
         'findMatchesForSnap': _is.MethodConnector(
           name: 'findMatchesForSnap',
           params: {
@@ -559,6 +578,8 @@ class Endpoints extends _is.EndpointDispatch {
         ),
       },
     );
+    modules['serverpod_auth'] = _i1n3uhu0.Endpoints()
+      ..initializeEndpoints(server);
     modules['serverpod_auth_idp'] = _iais.Endpoints()
       ..initializeEndpoints(server);
     modules['serverpod_auth_core'] = _iacs.Endpoints()

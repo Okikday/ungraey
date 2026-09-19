@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:ungraey_client/ungraey_client.dart';
-import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
+import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
 // When you are running the app on a physical device, you need to set the
@@ -24,9 +24,11 @@ final serverUrl = getServerUrl();
 /// instead of using a global client object. This is just a simple example.
 late final Client client;
 
+late final SessionManager sessionManager;
+
 Future<void> initializeClient() async {
   client = Client(await serverUrl)
-    ..connectivityMonitor = FlutterConnectivityMonitor()
-    ..authSessionManager = FlutterAuthSessionManager();
-  unawaited(client.auth.initialize());
+    ..connectivityMonitor = FlutterConnectivityMonitor();
+  sessionManager = SessionManager(caller: client.modules.auth);
+  unawaited(sessionManager.initialize());
 }

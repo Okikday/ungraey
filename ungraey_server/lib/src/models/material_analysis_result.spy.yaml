@@ -1,0 +1,5 @@
+class: MaterialAnalysisResult
+fields:
+  detectedCategories: List<MaterialCategory>
+  estimatedValueCents: int
+  confidenceScore: double

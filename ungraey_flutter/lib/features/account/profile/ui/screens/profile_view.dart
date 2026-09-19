@@ -6,6 +6,7 @@ import '../../../../../shared/components/gradient_footer.dart';
 import '../../../../../shared/theme/pure_theme_extension.dart';
 import '../../providers/profile_pod.dart';
 import '../actions/profile_actions.dart';
+import '../../../../impact/ui/widgets/milestone_trophy_grid.dart';
 import '../widgets/profile_app_bar.dart';
 import '../widgets/profile_header_card.dart';
 import '../widgets/profile_settings_group.dart';
@@ -70,6 +71,15 @@ class ProfileView extends ConsumerWidget {
                 completedHandoffs: profile.completedHandoffs,
                 rating: profile.rating,
               ),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 22)),
+
+          // Milestone Trophies Grid
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: MilestoneTrophyGrid(),
             ),
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 22)),

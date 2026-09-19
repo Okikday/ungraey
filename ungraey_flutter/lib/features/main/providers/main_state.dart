@@ -10,7 +10,7 @@ enum MainTabEntry {
   String normalize() => switch (this) {
     home => 'Home',
     bounties => 'Bounties',
-    snap => 'Snap',
+    snap => 'Scan',
     profile => 'Profile',
   };
 }

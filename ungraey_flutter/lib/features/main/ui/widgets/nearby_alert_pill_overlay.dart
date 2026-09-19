@@ -46,64 +46,69 @@ class _AlertPill extends StatelessWidget {
       padding: EdgeInsets.only(top: topPadding + 6, left: 16, right: 16),
       child: GestureDetector(
         onTap: onDismiss,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(1000),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              decoration: BoxDecoration(
-                color: pure.navBarBackground,
-                borderRadius: BorderRadius.circular(1000),
-                border: Border.all(
-                  color: pure.border,
-                  width: 1,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.18),
-                    blurRadius: 24,
-                    offset: const Offset(0, 6),
+        child: Dismissible(
+          key: ValueKey(alert.hashCode),
+          direction: DismissDirection.up,
+          onDismissed: (_) => onDismiss(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(1000),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                decoration: BoxDecoration(
+                  color: pure.navBarBackground,
+                  borderRadius: BorderRadius.circular(1000),
+                  border: Border.all(
+                    color: pure.border,
+                    width: 1,
                   ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  _PulsingDot(isSnap: alert.isSnap, pure: pure),
-                  const SizedBox(width: 8),
-                  Text(
-                    alert.emoji,
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          alert.headline,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: pure.textPrimary,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.2,
-                          ),
-                        ),
-                        Text(
-                          alert.detail,
-                          style: TextStyle(
-                            color: pure.textMuted,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.18),
+                      blurRadius: 24,
+                      offset: const Offset(0, 6),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    _PulsingDot(isSnap: alert.isSnap, pure: pure),
+                    const SizedBox(width: 8),
+                    Text(
+                      alert.emoji,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            alert.headline,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: pure.textPrimary,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                          Text(
+                            alert.detail,
+                            style: TextStyle(
+                              color: pure.textMuted,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

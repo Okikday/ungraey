@@ -12,6 +12,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _ida;
 import 'package:http/http.dart' as _i85jenna;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i312scxx;
 import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _iacc;
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
@@ -23,6 +24,8 @@ import 'package:ungraey_client/src/protocol/greetings/greeting.dart'
     as _i9fo1z21;
 import 'package:ungraey_client/src/protocol/handoff_transaction.dart'
     as _iwjfyrh2;
+import 'package:ungraey_client/src/protocol/material_analysis_result.dart'
+    as _ijom8t7p;
 import 'package:ungraey_client/src/protocol/material_category.dart'
     as _iv2qm0wr;
 import 'package:ungraey_client/src/protocol/snap.dart' as _icssktmw;
@@ -376,6 +379,14 @@ class EndpointSnap extends _isc.EndpointRef {
         {'snap': snap},
       );
 
+  /// Analyzes a base64 encoded image to determine its material category and estimated value.
+  _ida.Future<_ijom8t7p.MaterialAnalysisResult> analyze(String base64Image) =>
+      caller.callServerEndpoint<_ijom8t7p.MaterialAnalysisResult>(
+        'snap',
+        'analyze',
+        {'base64Image': base64Image},
+      );
+
   /// Finds all active bounties matching the snap's detected materials within [radiusMiles].
   _ida.Future<List<_ia79p7gr.Bounty>> findMatchesForSnap(
     int snapId, {
@@ -422,9 +433,12 @@ class EndpointGreeting extends _isc.EndpointRef {
 
 class Modules {
   Modules(Client client) {
+    auth = _i312scxx.Caller(client);
     serverpod_auth_idp = _iaic.Caller(client);
     serverpod_auth_core = _iacc.Caller(client);
   }
+
+  late final _i312scxx.Caller auth;
 
   late final _iaic.Caller serverpod_auth_idp;
 
@@ -497,6 +511,7 @@ class Client extends _isc.ServerpodClientShared {
 
   @override
   Map<String, _isc.ModuleEndpointCaller> get moduleLookup => {
+    'auth': modules.auth,
     'serverpod_auth_idp': modules.serverpod_auth_idp,
     'serverpod_auth_core': modules.serverpod_auth_core,
   };

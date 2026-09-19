@@ -30,7 +30,7 @@ class _EcoDialGaugeState extends State<EcoDialGauge>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1400),
+      duration: const Duration(milliseconds: 400),
     );
     _animation = CurvedAnimation(
       parent: _controller,
@@ -57,13 +57,13 @@ class _EcoDialGaugeState extends State<EcoDialGauge>
         final currentCo2 = (widget.co2eAvoided * progress).toStringAsFixed(1);
 
         return SizedBox(
-          width: 260,
-          height: 260,
+          width: 220,
+          height: 220,
           child: Stack(
             alignment: Alignment.center,
             children: [
               CustomPaint(
-                size: const Size(260, 260),
+                size: const Size(220, 220),
                 painter: _RingPainter(
                   kgProgress:
                       (widget.kgDiverted / 100).clamp(0.0, 1.0).toDouble() *
@@ -86,7 +86,7 @@ class _EcoDialGaugeState extends State<EcoDialGauge>
                     '$currentKg kg',
                     style: TextStyle(
                       color: pure.textPrimary,
-                      fontSize: 34,
+                      fontSize: 28,
                       fontWeight: FontWeight.w900,
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
@@ -151,14 +151,14 @@ class _RingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
 
-    _drawArc(canvas, center, 116, 12, trackColor, 1.0);
-    _drawArc(canvas, center, 116, 12, primaryColor, kgProgress);
+    _drawArc(canvas, center, 98, 10, trackColor, 1.0);
+    _drawArc(canvas, center, 98, 10, primaryColor, kgProgress);
 
-    _drawArc(canvas, center, 98, 9, trackColor, 1.0);
-    _drawArc(canvas, center, 98, 9, const Color(0xFF06B6D4), co2Progress);
+    _drawArc(canvas, center, 82, 8, trackColor, 1.0);
+    _drawArc(canvas, center, 82, 8, const Color(0xFF06B6D4), co2Progress);
 
-    _drawArc(canvas, center, 82, 7, trackColor, 1.0);
-    _drawArc(canvas, center, 82, 7, secondaryColor, treeProgress);
+    _drawArc(canvas, center, 68, 6, trackColor, 1.0);
+    _drawArc(canvas, center, 68, 6, secondaryColor, treeProgress);
   }
 
   void _drawArc(

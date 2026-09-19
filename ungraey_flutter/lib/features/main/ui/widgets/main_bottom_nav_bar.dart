@@ -8,8 +8,6 @@ import '../../../../shared/components/k_curves.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
 import '../../providers/main_pod.dart';
 import '../../providers/main_state.dart';
-import 'special_action_button.dart';
-
 typedef _TabEntry = (
   MainTabEntry tab,
   IconData activeIcon,
@@ -91,8 +89,6 @@ class MainBottomNavBar extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
-              const SpecialActionButton(),
             ],
           ),
         ),
@@ -118,10 +114,10 @@ class _HighlightIndicator extends StatelessWidget {
           width: 66,
           height: 54,
           decoration: BoxDecoration(
-            color: pure.primary.withValues(alpha: 0.16),
+            color: pure.surfaceHighlight,
             borderRadius: BorderRadius.circular(40),
             border: Border.all(
-              color: pure.primary.withValues(alpha: 0.35),
+              color: pure.borderSubtle,
               width: 1,
             ),
           ),
@@ -163,14 +159,14 @@ class _NavBarItem extends StatelessWidget {
             children: [
               Icon(
                 isActive ? activeIcon : inactiveIcon,
-                color: isActive ? pure.primary : pure.textMuted,
+                color: isActive ? pure.textPrimary : pure.textMuted,
                 size: 22,
               ),
               const SizedBox(height: 3),
               AppText(
                 tab.normalize(),
                 style: TextStyle(
-                  color: isActive ? pure.primary : pure.textMuted,
+                  color: isActive ? pure.textPrimary : pure.textMuted,
                   fontSize: 10,
                   fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
                 ),

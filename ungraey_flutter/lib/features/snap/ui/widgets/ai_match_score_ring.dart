@@ -12,7 +12,7 @@ class AiMatchScoreRing extends StatefulWidget {
   const AiMatchScoreRing({
     super.key,
     required this.score,
-    this.size = 72,
+    this.size = 54,
   });
 
   @override
@@ -29,7 +29,7 @@ class _AiMatchScoreRingState extends State<AiMatchScoreRing>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 350),
     );
     _arcAnimation = CurvedAnimation(
       parent: _controller,
@@ -104,7 +104,7 @@ class _AiMatchScoreRingState extends State<AiMatchScoreRing>
           ),
         );
       },
-    ).animate().fadeIn(duration: 300.ms);
+    ).animate().fadeIn(duration: 150.ms);
   }
 }
 
@@ -125,7 +125,7 @@ class _RingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = (size.width - 10) / 2;
-    const strokeWidth = 5.0;
+    const strokeWidth = 3.0;
     const startAngle = -pi / 2;
 
     // Track ring
@@ -151,7 +151,7 @@ class _RingPainter extends CustomPainter {
       false,
       Paint()
         ..color = glowColor
-        ..strokeWidth = strokeWidth + 5
+        ..strokeWidth = strokeWidth + 3
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),

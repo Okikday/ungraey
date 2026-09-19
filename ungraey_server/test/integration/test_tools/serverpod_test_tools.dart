@@ -23,6 +23,8 @@ import 'package:ungraey_server/src/generated/greetings/greeting.dart'
     as _i3vayi3l;
 import 'package:ungraey_server/src/generated/handoff_transaction.dart'
     as _iqny3070;
+import 'package:ungraey_server/src/generated/material_analysis_result.dart'
+    as _ifko6tfq;
 import 'package:ungraey_server/src/generated/material_category.dart'
     as _i8sopnk2;
 import 'package:ungraey_server/src/generated/snap.dart' as _idr2u3mw;
@@ -853,6 +855,37 @@ class _SnapEndpoint {
                   _localCallContext.arguments,
                 )
                 as _ida.Future<_idr2u3mw.Snap>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_ifko6tfq.MaterialAnalysisResult> analyze(
+    _ist.TestSessionBuilder sessionBuilder,
+    String base64Image,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'snap',
+            method: 'analyze',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'snap',
+          methodName: 'analyze',
+          parameters: _ist.testObjectToJson({'base64Image': base64Image}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_ifko6tfq.MaterialAnalysisResult>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();

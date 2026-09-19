@@ -167,9 +167,9 @@ class _RewardBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.15),
+        color: pure.surfaceHighlight,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withValues(alpha: 0.35), width: 1),
+        border: Border.all(color: pure.borderSubtle, width: 1),
       ),
       child: Text(
         label,
