@@ -35,7 +35,7 @@ class _CreateBountyModalState extends ConsumerState<CreateBountyModal> {
     final draft = widget.draft;
     if (draft != null) {
       _category = draft.category;
-      _rewardDollars = draft.rewardDollars.clamp(1, 100);
+      _rewardDollars = draft.rewardDollars.clamp(1, 100).toInt();
       _titleController.text = draft.titleHint;
     }
   }

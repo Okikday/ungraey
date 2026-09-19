@@ -66,11 +66,14 @@ class _EcoDialGaugeState extends State<EcoDialGauge>
                 size: const Size(260, 260),
                 painter: _RingPainter(
                   kgProgress:
-                      (widget.kgDiverted / 100).clamp(0.0, 1.0) * progress,
+                      (widget.kgDiverted / 100).clamp(0.0, 1.0).toDouble() *
+                      progress,
                   co2Progress:
-                      (widget.co2eAvoided / 150).clamp(0.0, 1.0) * progress,
+                      (widget.co2eAvoided / 150).clamp(0.0, 1.0).toDouble() *
+                      progress,
                   treeProgress:
-                      (widget.treesEquivalent / 10).clamp(0.0, 1.0) * progress,
+                      (widget.treesEquivalent / 10).clamp(0.0, 1.0).toDouble() *
+                      progress,
                   primaryColor: pure.primary,
                   secondaryColor: pure.secondary,
                   trackColor: pure.surfaceHighlight,
@@ -175,7 +178,7 @@ class _RingPainter extends CustomPainter {
     c.drawArc(
       Rect.fromCircle(center: center, radius: r),
       -pi / 2,
-      2 * pi * p.clamp(0.0, 1.0),
+      2 * pi * p.clamp(0.0, 1.0).toDouble(),
       false,
       paint,
     );

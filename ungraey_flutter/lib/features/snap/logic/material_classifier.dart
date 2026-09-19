@@ -65,8 +65,12 @@ class MaterialClassifier {
         DetectedRegion(
           normalizedRect: sample.$2,
           category: sample.$1,
+<<<<<<< HEAD
           confidence: (sample.$3).clamp(0.0, 1.0),
           estimatedKg: double.parse(sample.$4.toStringAsFixed(1)),
+=======
+          confidence: (sample.$3).clamp(0.0, 1.0).toDouble(),
+>>>>>>> d7d5dc1 (fix: resolve num-to-double/int clamp type errors across flutter app)
         ),
       );
     }

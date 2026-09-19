@@ -20,5 +20,6 @@ class ClampedCurve extends Curve {
   const ClampedCurve(this.curve);
 
   @override
-  double transform(double t) => curve.transform(t.clamp(0.0, 1.0));
+  double transform(double t) =>
+      curve.transform(t.clamp(0.0, 1.0).toDouble());
 }

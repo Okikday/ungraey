@@ -20,7 +20,9 @@ class BountyCard extends StatelessWidget {
     final pure = context.pureTheme;
     final cat = bounty.category;
     final progress = bounty.quantityNeeded > 0
-        ? (bounty.quantityFulfilled / bounty.quantityNeeded).clamp(0.0, 1.0)
+        ? (bounty.quantityFulfilled / bounty.quantityNeeded)
+              .clamp(0.0, 1.0)
+              .toDouble()
         : 0.0;
 
     return ScaleClickWrapper(

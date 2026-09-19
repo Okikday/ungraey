@@ -74,7 +74,7 @@ class SnapActions {
         category: top.category,
         titleHint:
             'Selling: ${top.category.emoji} ${top.category.displayName} lot',
-        rewardDollars: (estimate.typicalCents / 100).round().clamp(1, 100),
+        rewardDollars: (estimate.typicalCents / 100).round().clamp(1, 100).toInt(),
       ),
     );
   }

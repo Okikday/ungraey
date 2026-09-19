@@ -59,7 +59,9 @@ class FloatingContextMenu extends StatelessWidget {
     final pure = context.pureTheme;
     final size = MediaQuery.of(context).size;
     final bottomOffset = size.height - targetRect.top + 12;
-    final rightOffset = (size.width - targetRect.right).clamp(16.0, 48.0);
+    final rightOffset = (size.width - targetRect.right)
+        .clamp(16.0, 48.0)
+        .toDouble();
 
     return Stack(
       children: [
