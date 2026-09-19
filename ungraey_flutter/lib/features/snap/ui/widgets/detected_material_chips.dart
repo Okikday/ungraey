@@ -69,7 +69,7 @@ class _MaterialChip extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              '${region.estimatedKg}kg • ${(region.confidence * 100).toInt()}%',
+              '${(region.confidence * 100).toInt()}% Confidence',
               style: TextStyle(
                 color: pure.primary,
                 fontSize: 10.5,

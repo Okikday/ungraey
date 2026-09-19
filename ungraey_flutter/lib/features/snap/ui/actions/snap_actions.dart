@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../../bounties/models/bounty_draft.dart';
 import '../../../bounties/ui/actions/bounties_actions.dart';
 import '../../../bounties/ui/screens/bounty_detail_view.dart';
-import '../../logic/material_price_guide.dart';
 import '../../../../core/enums/material_category.dart';
 import '../../providers/snap_pod.dart';
 
@@ -66,7 +65,6 @@ class SnapActions {
     final state = ref.read(SnapPod.me);
     if (state.detectedRegions.isEmpty) return;
     final top = state.detectedRegions.first;
-    final estimate = MaterialPriceGuide.estimateFor(top.category);
     BountiesActions.openCreateBounty(
       context,
       ref,
@@ -74,7 +72,7 @@ class SnapActions {
         category: top.category,
         titleHint:
             'Selling: ${top.category.emoji} ${top.category.displayName} lot',
-        rewardDollars: (estimate.typicalCents / 100).round().clamp(1, 100).toInt(),
+        rewardDollars: (state.estimatedTypicalCents / 100).round().clamp(1, 100).toInt(),
       ),
     );
   }
