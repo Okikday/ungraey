@@ -22,8 +22,20 @@ class CommunityLeaderboardSection extends ConsumerWidget {
       ('Maya R.', '🎨', userKg + 34.6, userHandoffs + 5, false),
       ('Theo B.', '🔧', userKg + 11.3, userHandoffs + 2, false),
       ('You', '🌿', userKg, userHandoffs, true),
-      ('Priya S.', '🪴', (userKg - 9.8).clamp(0.5, 9999), userHandoffs, false),
-      ('Sam K.', '📚', (userKg - 21.4).clamp(0.5, 9999), userHandoffs - 1, false),
+      (
+        'Priya S.',
+        '🪴',
+        (userKg - 9.8).clamp(0.5, 9999),
+        userHandoffs,
+        false,
+      ),
+      (
+        'Sam K.',
+        '📚',
+        (userKg - 21.4).clamp(0.5, 9999),
+        userHandoffs - 1,
+        false,
+      ),
     ]..sort((a, b) => b.$3.compareTo(a.$3));
 
     return Column(
