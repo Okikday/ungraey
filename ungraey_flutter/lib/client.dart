@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:ungraey_client/ungraey_client.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
@@ -13,12 +15,6 @@ import 'package:serverpod_flutter/serverpod_flutter.dart';
 //
 // Otherwise, the server URL is fetched from the assets/config.json file or
 // defaults to http://$localhost:8080/ if not found.
-final serverUrl = getServerUrl();
-
-/// Sets up a global client object that can be used to talk to the server from
-/// anywhere in our app. The client is generated from your server code
-/// and is set up to connect to a Serverpod running on a local server on
-/// the default port. You will need to modify this to connect to staging or
 /// production servers.
 /// In a larger app, you may want to use the dependency injection of your choice
 /// instead of using a global client object. This is just a simple example.
@@ -26,9 +22,20 @@ late final Client client;
 
 late final SessionManager sessionManager;
 
+final serverUrl = getServerUrl();
+
 Future<void> initializeClient() async {
-  client = Client(await serverUrl)
-    ..connectivityMonitor = FlutterConnectivityMonitor();
+  String url = await serverUrl;
+  if (Platform.isAndroid && url.contains('localhost')) {
+    url = url.replaceAll('localhost', '10.0.2.2');
+  }
+  
+  client = Client(url)
+    ..connectivityMonitor = FlutterConnectivityMonitor()
+    ..authKeyProvider = FlutterAuthenticationKeyManager();
+    
   sessionManager = SessionManager(caller: client.modules.auth);
-  unawaited(sessionManager.initialize());
+  sessionManager.initialize().catchError((e) {
+    debugPrint('Failed to initialize session manager: $e');
+  });
 }
