@@ -1,10 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Camera + gallery access for the AI Snap material classifier. -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
     <application
-        android:label="Ungraey"
+        android:label="ungraey_flutter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -10,9 +10,7 @@ class SnapState extends Equatable {
   final List<DetectedRegion> detectedRegions;
   final List<Bounty> matchingBounties;
   final bool hasCaptured;
-  final int estimatedLowCents;
-  final int estimatedTypicalCents;
-  final int estimatedHighCents;
+  final double estimatedTotalKg;
   final int totalPotentialEarningsCents;
 
   const SnapState({
@@ -22,9 +20,7 @@ class SnapState extends Equatable {
     this.detectedRegions = const [],
     this.matchingBounties = const [],
     this.hasCaptured = false,
-    this.estimatedLowCents = 0,
-    this.estimatedTypicalCents = 0,
-    this.estimatedHighCents = 0,
+    this.estimatedTotalKg = 0.0,
     this.totalPotentialEarningsCents = 0,
   });
 
@@ -35,9 +31,7 @@ class SnapState extends Equatable {
     List<DetectedRegion>? detectedRegions,
     List<Bounty>? matchingBounties,
     bool? hasCaptured,
-    int? estimatedLowCents,
-    int? estimatedTypicalCents,
-    int? estimatedHighCents,
+    double? estimatedTotalKg,
     int? totalPotentialEarningsCents,
   }) {
     return SnapState(
@@ -47,10 +41,7 @@ class SnapState extends Equatable {
       detectedRegions: detectedRegions ?? this.detectedRegions,
       matchingBounties: matchingBounties ?? this.matchingBounties,
       hasCaptured: hasCaptured ?? this.hasCaptured,
-      estimatedLowCents: estimatedLowCents ?? this.estimatedLowCents,
-      estimatedTypicalCents:
-          estimatedTypicalCents ?? this.estimatedTypicalCents,
-      estimatedHighCents: estimatedHighCents ?? this.estimatedHighCents,
+      estimatedTotalKg: estimatedTotalKg ?? this.estimatedTotalKg,
       totalPotentialEarningsCents:
           totalPotentialEarningsCents ?? this.totalPotentialEarningsCents,
     );
@@ -64,9 +55,7 @@ class SnapState extends Equatable {
     detectedRegions,
     matchingBounties,
     hasCaptured,
-    estimatedLowCents,
-    estimatedTypicalCents,
-    estimatedHighCents,
+    estimatedTotalKg,
     totalPotentialEarningsCents,
   ];
 }

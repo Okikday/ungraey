@@ -66,7 +66,7 @@ class _MainShellViewState extends ConsumerState<MainShellView> {
     if (!_pageController.hasClients) return;
     _pageController.animateToPage(
       index,
-      duration: const Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 700),
       curve: KCurves.snappySpring,
     );
   }

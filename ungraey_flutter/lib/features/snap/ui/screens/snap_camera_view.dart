@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/enums/material_category.dart';
 import '../../../../shared/theme/pure_theme_extension.dart';
-import '../../logic/material_price_guide.dart';
 import '../../providers/snap_pod.dart';
 import '../actions/snap_actions.dart';
 import '../widgets/camera_viewfinder_hud.dart';
@@ -59,19 +58,10 @@ class SnapCameraView extends ConsumerWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Est. value ${MaterialPriceGuide.formatDollars(state.estimatedLowCents)}–${MaterialPriceGuide.formatDollars(state.estimatedHighCents)}',
-                              style: TextStyle(
-                                color: pure.secondary,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Market estimate • final price agreed at handoff',
+                              'Estimated weight: ${state.estimatedTotalKg} kg',
                               style: TextStyle(
                                 color: pure.textMuted,
-                                fontSize: 12,
+                                fontSize: 13,
                               ),
                             ),
                           ],
