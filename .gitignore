@@ -30,4 +30,4 @@ credentials.json
 service_account*.json
 
 # Personal planning notes
-/okiki
+okiki/
