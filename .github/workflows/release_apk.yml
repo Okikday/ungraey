@@ -9,9 +9,9 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Release Tag (e.g. v1.0.0)'
+        description: 'Release Tag (e.g. v4 or v4.0.0)'
         required: false
-        default: 'v1.0.0'
+        default: 'v4'
 
 permissions:
   contents: write
@@ -62,11 +62,23 @@ jobs:
           name: ungraey-split-apks
           path: ungraey_flutter/build/app/outputs/flutter-apk/ungraey-*.apk
 
+      - name: Determine Release Tag
+        id: release_tag
+        run: |
+          if [ -n "${{ inputs.tag_name }}" ]; then
+            TAG="${{ inputs.tag_name }}"
+          elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            TAG="${{ github.ref_name }}"
+          else
+            TAG="v4"
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
       - name: Create & Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event.inputs.tag_name || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'latest' }}
-          name: ${{ github.event.inputs.tag_name || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'Ungraey Release (Latest)' }}
+          tag_name: ${{ steps.release_tag.outputs.tag }}
+          name: Ungraey Release ${{ steps.release_tag.outputs.tag }}
           files: |
             ungraey_flutter/build/app/outputs/flutter-apk/ungraey-*.apk
           generate_release_notes: true

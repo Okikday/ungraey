@@ -43,17 +43,33 @@ class TesterSignInView extends StatelessWidget {
                   context.go('/home');
                 },
               ),
-              const SizedBox(height: 16),
-              TextButton(
+              const SizedBox(height: 12),
+              AppText(
+                'Demo Account: tester@ungraey.com / tester123',
+                style: TextStyle(
+                  color: pure.textMuted,
+                  fontSize: 12,
+                ),
+              ),
+              const SizedBox(height: 24),
+              OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: pure.primary, width: 1.5),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 onPressed: () {
-                  // Bypass login and go directly to home
                   context.go('/home');
                 },
-                child: AppText(
+                icon: Icon(Icons.bolt, color: pure.primary, size: 20),
+                label: AppText(
                   'Bypass Login (Hackathon Demo)',
                   style: TextStyle(
                     color: pure.primary,
-                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
                   ),
                 ),
               ),

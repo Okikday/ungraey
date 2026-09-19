@@ -11,9 +11,6 @@ final appRouter = GoRouter(
     final isSignedIn = sessionManager.isSignedIn;
     final isGoingToLogin = state.uri.path == '/';
 
-    if (!isSignedIn && !isGoingToLogin) {
-      return '/';
-    }
     if (isSignedIn && isGoingToLogin) {
       return '/home';
     }

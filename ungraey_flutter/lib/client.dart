@@ -26,7 +26,7 @@ final serverUrl = getServerUrl();
 
 Future<void> initializeClient() async {
   String url = await serverUrl;
-  if (Platform.isAndroid && url.contains('localhost')) {
+  if (!kIsWeb && Platform.isAndroid && url.contains('localhost')) {
     url = url.replaceAll('localhost', '10.0.2.2');
   }
   
